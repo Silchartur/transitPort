@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PatioController extends Controller
+class OperariosController extends Controller
 {
     //
 }
