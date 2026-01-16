@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('num_serie');
             $table->string('companyia');
+            $table->boolean('existe');
             $table->timestamps();
+
+
+            $table->foreignId('buque_id')->constrained('buques');
+            $table->foreignId('patios_id')->constrained('patios');
         });
     }
 
