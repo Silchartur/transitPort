@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('zonas', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('tipo', 2);
+            $table->boolean('activa')->default(true);
             $table->timestamps();
         });
     }
