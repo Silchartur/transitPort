@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('buques', function (Blueprint $table) {
+        Schema::create('gestores', function (Blueprint $table) {
             $table->id();
             $table->text('nombre');
-            $table->text('tipo');
-            $table->integer('capacidad');
-            $table->enum('estado', ['salido'. 'en espera', 'atracado'])->default('en espera');
+            $table->text('apellidos');
+            $table->text('email');
+            $table->integer('telefono');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('buques');
+        Schema::dropIfExists('gestores');
     }
 };
