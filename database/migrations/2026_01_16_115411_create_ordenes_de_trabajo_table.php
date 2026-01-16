@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('origen')->constrained('buques')->cascadeOnDelete();
             $table->foreignId('destino')->constrained('zonas')->cascadeOnDelete();
             $table->foreignId('contenedor_id')->constrained('contenedores')->cascadeOnDelete();
-            $table->foreignId('administrativo_id')->constrained('administrativo')->cascadeOnDelete();
+            $table->foreignId('administrativo_id')->constrained('administrativos')->cascadeOnDelete();
             $table->timestamps();
         });
     }
