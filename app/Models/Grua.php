@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Grua extends Model
 {
-<<<<<<< HEAD
+
     protected $table = 'gruas';
     protected $fillable = ['tipo'];
 
@@ -24,7 +24,5 @@ class Grua extends Model
 
         return $this->hasMany(Contenedor::class);
     }
-=======
 
->>>>>>> 6a0c6182caecf052e746d662bfeeebd6a83069b1
 }
