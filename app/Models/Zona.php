@@ -13,4 +13,10 @@ class Zona extends Model
 
         return $this->hasMany(Parking::class);
     }
+
+    public function patio() {
+
+        return $this->belongsTo(Patio::class);
+    }
+
 }
