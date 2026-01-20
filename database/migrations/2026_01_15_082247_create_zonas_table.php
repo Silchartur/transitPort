@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('zonas', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo', 2);
+            $table->string('codigo')->unique()->nullable();
+            $table->enum('tipo', ['patio', 'descarga']);
             $table->boolean('activa')->default(true);
             $table->timestamps();
         });

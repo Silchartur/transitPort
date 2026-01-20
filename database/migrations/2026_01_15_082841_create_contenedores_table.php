@@ -18,7 +18,6 @@ return new class extends Migration
             $table->boolean('existe');
             $table->timestamps();
 
-
             $table->foreignId('buque_id')->constrained('buques');
             $table->foreignId('patios_id')->constrained('patios');
         });

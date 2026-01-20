@@ -7,7 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Parking extends Model
 {
     protected $table = 'parkings';
-    protected $fillable = ['disponible', 'activa'];
+    protected $fillable = ['prefijo', 'disponible', 'activa'];
+
+    protected static function booted() {
+
+        static::created(function ($parking) {
+
+            $parking->codigo = $parking->prefijo . $parking->id;
+            $parking->save();
+        });
+    }
 
     public function zona() {
 

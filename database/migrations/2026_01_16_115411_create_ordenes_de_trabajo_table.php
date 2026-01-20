@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('ordenesDeTrabajo', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo')->unique()->nullable();
             $table->enum('tipo', ['carga', 'descarga']);
             $table->enum('estado', ['pendiente', 'en curso', 'completada'])->default('pendiente');
             $table->enum('prioridad', ['alta', 'media', 'baja']);
