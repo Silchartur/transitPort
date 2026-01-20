@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('buques', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo')->unique()->nullable();
+            $table->string('prefijo')->default('B-');
             $table->text('nombre');
             $table->text('tipo');
             $table->integer('capacidad');
