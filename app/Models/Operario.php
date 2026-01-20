@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Operario extends Model
 {
     protected $table = "operarios";
-    protected $fillable = ['tipo','nombre', 'apellidos', 'email', 'telefono'];
+    protected $fillable = ['prefijo','tipo','nombre', 'apellidos', 'email', 'telefono'];
 
     public function gruas() {
 
@@ -18,4 +18,13 @@ class Operario extends Model
 
         return $this->hasMany(OrdenDeTrabajo::class);
     }
+
+    protected static function booted()
+    {
+        static::created(function ($operario) {
+            $operario->codigo = $operario->prefijo . $operario->id;
+            $operario->save();
+        });
+    }
+
 }

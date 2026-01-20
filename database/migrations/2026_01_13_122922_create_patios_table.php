@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('patios', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo')->unique()->nullable();
+            $table->string('prefijo')->default('P-');
             $table->integer('capacidad');
             $table->timestamps();
         });

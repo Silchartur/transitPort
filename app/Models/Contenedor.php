@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Contenedor extends Model
 {
     protected $table = "buques";
-    protected $fillable = ['num__serie', 'companyia', 'existe'];
+    protected $fillable = ['prefijo','num__serie', 'companyia', 'existe'];
 
     public function patio(){
 
@@ -28,4 +28,15 @@ class Contenedor extends Model
 
         return $this->hasMany(Grua::class);
     }
+
+
+      protected static function booted()
+    {
+        static::created(function ($contenedor) {
+            $contenedor->codigo = $contenedor->prefijo . $contenedor->id;
+            $contenedor->save();
+        });
+    }
 }
+
+

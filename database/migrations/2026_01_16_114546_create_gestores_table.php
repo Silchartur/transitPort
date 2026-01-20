@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('gestores', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo')->unique()->nullable();
+            $table->string('prefijo')->default('G-');
             $table->text('nombre');
             $table->text('apellidos');
             $table->text('email');

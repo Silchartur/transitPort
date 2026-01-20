@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Patio extends Model
 {
     protected $table = "patios";
-    protected $fillable = ['capacidad'];
+    protected $fillable = ['prefijo','capacidad'];
 
     public function contenedores(){
 
@@ -23,4 +23,15 @@ class Patio extends Model
 
         return $this->hasMany(Zona::class);
     }
+
+    protected static function booted()
+    {
+
+        static::created(function ($patio) {
+            $patio->codigo = $patio->prefijo . $patio->id;
+            $patio->save();
+        });
+    }
 }
+
+
