@@ -15,6 +15,11 @@ class OrdenDeTrabajo extends Model
         return $this->belongsTo(Administrativo::class);
     }
 
+    public function operarios() {
+
+        return $this->belongsToMany(Operario::class);
+    }
+
     public function contenedor() {
 
         return $this->belongsTo(Contenedor::class);

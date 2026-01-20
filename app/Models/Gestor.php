@@ -9,4 +9,8 @@ class Gestor extends Model
     protected $table = "gestores";
     protected $fillable = ['nombre', 'apellidos', 'email', 'telefono'];
 
+    public function gruas() {
+
+        return $this->hasMany(Grua::class);
+    }
 }

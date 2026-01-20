@@ -8,4 +8,14 @@ class Operario extends Model
 {
     protected $table = "operarios";
     protected $fillable = ['tipo','nombre', 'apellidos', 'email', 'telefono'];
+
+    public function gruas() {
+
+        return $this->hasMany(Grua::class);
+    }
+
+    public function ordenesDeTrabajo() {
+
+        return $this->hasMany(OrdenDeTrabajo::class);
+    }
 }

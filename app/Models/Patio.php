@@ -9,8 +9,18 @@ class Patio extends Model
     protected $table = "patios";
     protected $fillable = ['capacidad'];
 
-
     public function contenedores(){
+
         return $this->hasMany(Contenedor::class);
+    }
+
+    public function gruas_sc() {
+
+        return $this->hasMany(Grua_sc::class);
+    }
+
+    public function zonas() {
+
+        return $this->hasMany(Zona::class);
     }
 }

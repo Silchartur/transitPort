@@ -10,6 +10,22 @@ class Contenedor extends Model
     protected $fillable = ['num__serie', 'companyia', 'existe'];
 
     public function patio(){
+
         return $this->belongsTo(Patio::class);
+    }
+
+    public function buque() {
+
+        return $this->belongsTo(Buque::class);
+    }
+
+    public function ordenesDeTrabajo() {
+
+        return $this->hasMany(OrdenDeTrabajo::class);
+    }
+
+    public function gruas() {
+
+        return $this->hasMany(Grua::class);
     }
 }
