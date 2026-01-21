@@ -25,4 +25,14 @@ class Grua extends Model
         return $this->hasMany(Contenedor::class);
     }
 
+    public function gruaSTS() {
+
+        return $this->hasOne(Grua_sts::class);
+    }
+
+    public function gruaSC() {
+
+        return $this->hasOne(Grua_sc::class);
+    }
+
 }
