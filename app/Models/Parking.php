@@ -13,7 +13,7 @@ class Parking extends Model
 
         static::created(function ($parking) {
 
-            $parking->codigo = $parking->prefijo . $parking->id;
+            $parking->codigo = "P-" . $parking->id;
             $parking->save();
         });
     }

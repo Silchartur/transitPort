@@ -28,7 +28,7 @@ class Patio extends Model
     {
 
         static::created(function ($patio) {
-            $patio->codigo = $patio->prefijo . $patio->id;
+            $patio->codigo = "P-" . $patio->id;
             $patio->save();
         });
     }

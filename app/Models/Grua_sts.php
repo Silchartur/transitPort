@@ -12,4 +12,13 @@ class Grua_sts extends Model
 
         return $this->belongsTo(Grua::class);
     }
+
+    protected static function booted() {
+
+        static::created(function ($grua_sts) {
+
+            $grua_sts->codigo = "STS-" . $grua_sts->id;
+            $grua_sts->save();
+        });
+    }
 }

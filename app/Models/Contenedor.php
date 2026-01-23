@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Contenedor extends Model
 {
     protected $table = "buques";
-    protected $fillable = ['prefijo','num__serie', 'companyia', 'existe'];
+    protected $fillable = ['num__serie', 'companyia', 'existe'];
 
     public function patio(){
 
@@ -33,7 +33,7 @@ class Contenedor extends Model
       protected static function booted()
     {
         static::created(function ($contenedor) {
-            $contenedor->codigo = $contenedor->prefijo . $contenedor->id;
+            $contenedor->codigo = "C-" . $contenedor->id;
             $contenedor->save();
         });
     }

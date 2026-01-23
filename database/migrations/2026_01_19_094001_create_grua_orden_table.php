@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-
             $table->foreignId('grua_id')
                     ->constrained('gruas')
                     ->cascadeOnDelete()

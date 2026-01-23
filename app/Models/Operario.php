@@ -22,7 +22,7 @@ class Operario extends Model
     protected static function booted()
     {
         static::created(function ($operario) {
-            $operario->codigo = $operario->prefijo . $operario->id;
+            $operario->codigo = "O-" . $operario->id;
             $operario->save();
         });
     }

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('administrativos', function (Blueprint $table) {
             $table->id();
             $table->string('codigo')->unique()->nullable();
-            $table->string('prefijo')->default('A-');
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('email');

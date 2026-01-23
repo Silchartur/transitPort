@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Administrativo extends Model
 {
     protected $table = 'administrativos';
-    protected $fillable = ['prefijo','nombre', 'apellidos', 'email', 'telefono'];
+    protected $fillable = ['nombre', 'apellidos', 'email', 'telefono'];
 
     public function ordenesDeTrabajo() {
 
@@ -17,7 +17,7 @@ class Administrativo extends Model
     protected static function booted()
     {
         static::created(function ($administrativo) {
-            $administrativo->codigo = $administrativo->prefijo . $administrativo->id;
+            $administrativo->codigo = "A-" . $administrativo->id;
             $administrativo->save();
         });
     }

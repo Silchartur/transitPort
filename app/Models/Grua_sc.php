@@ -12,4 +12,13 @@ class Grua_sc extends Model
 
         return $this->belongsTo(Grua::class);
     }
+
+    protected static function booted() {
+
+        static::created(function ($grua_sc) {
+
+            $grua_sc->codigo = "SC-" . $grua_sc->id;
+            $grua_sc->save();
+        });
+    }
 }

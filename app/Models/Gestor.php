@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Gestor extends Model
 {
     protected $table = "gestores";
-    protected $fillable = ['prefijo','nombre', 'apellidos', 'email', 'telefono'];
+    protected $fillable = ['nombre', 'apellidos', 'email', 'telefono'];
 
     public function gruas() {
 
@@ -18,7 +18,7 @@ class Gestor extends Model
     protected static function booted()
     {
         static::created(function ($gestor) {
-            $gestor->codigo = $gestor->prefijo . $gestor->id;
+            $gestor->codigo = "G-" . $gestor->id;
             $gestor->save();
         });
     }

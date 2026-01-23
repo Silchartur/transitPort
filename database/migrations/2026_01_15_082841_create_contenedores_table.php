@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('contenedores', function (Blueprint $table) {
             $table->id();
             $table->string('codigo')->unique()->nullable();
-            $table->string('prefijo')->default('C-');
             $table->string('num_serie');
             $table->string('companyia');
             $table->boolean('existe');

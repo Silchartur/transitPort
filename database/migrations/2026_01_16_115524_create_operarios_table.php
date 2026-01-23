@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('operarios', function (Blueprint $table) {
             $table->id();
             $table->string('codigo')->unique()->nullable();
-            $table->string('prefijo')->default('O-');
             $table->text('tipo');
             $table->text('nombre');
             $table->text('apellidos');
