@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Parking extends Model
 {
     protected $table = 'parkings';
-    protected $fillable = ['prefijo', 'disponible', 'activa'];
+    protected $fillable = ['disponible', 'activa'];
 
     protected static function booted() {
 

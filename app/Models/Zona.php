@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Zona extends Model
 {
     protected $table = 'zonas';
-    protected $fillable = ['prefijo', 'tipo', 'activa'];
+    protected $fillable = ['tipo', 'activa'];
 
     protected static function booted() {
 

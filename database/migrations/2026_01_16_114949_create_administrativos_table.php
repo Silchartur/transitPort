@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('apellidos');
             $table->string('email');
             $table->integer('telefono');
+            $table->text('imagen');
             $table->timestamps();
         });
     }

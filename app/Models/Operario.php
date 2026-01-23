@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Operario extends Model
 {
     protected $table = "operarios";
-    protected $fillable = ['prefijo','tipo','nombre', 'apellidos', 'email', 'telefono'];
+    protected $fillable = ['tipo','nombre', 'apellidos', 'email', 'telefono','imagen'];
 
     public function gruas() {
 
