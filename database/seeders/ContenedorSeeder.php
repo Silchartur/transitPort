@@ -6,6 +6,7 @@ use App\Models\Contenedor;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use App\Models\Buque;
 //protected $fillable = ['num__serie', 'companyia', 'existe'];
 class ContenedorSeeder extends Seeder
 {
@@ -14,15 +15,19 @@ class ContenedorSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create('es_ES');
 
-        for ($i = 0; $i < 10; $i++) {
-            Contenedor::create([
-                'num_serie' => $faker->buildingNumber(),
-                'companyia' => $faker->company(),
-                'existe' => $faker->boolean(),
+        Buque::all()->each(function ($buque) {
 
-            ]);
-        }
+            $faker = Faker::create('es_ES');
+
+            for ($i = 0; $i < 10; $i++) {
+                Contenedor::create([
+                    'num_serie' => $faker->numerify('CONT-#########'),
+                    'companyia' => $faker->company(),
+                    'existe' => $faker->boolean(),
+                    'buque_id' => $buque->id
+                ]);
+            }
+        });
     }
 }

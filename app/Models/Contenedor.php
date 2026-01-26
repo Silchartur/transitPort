@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contenedor extends Model
 {
-    protected $table = "buques";
+    protected $table = "contenedores";
     protected $fillable = ['num__serie', 'companyia', 'existe'];
 
     public function patio(){

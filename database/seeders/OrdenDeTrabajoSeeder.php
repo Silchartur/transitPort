@@ -5,9 +5,10 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use App\Models\Zona;
+use App\Models\OrdenDeTrabajo;
 
-class ZonasSeeder extends Seeder
+
+class OrdenDeTrabajoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,12 +18,14 @@ class ZonasSeeder extends Seeder
         $faker = Faker::create('es_ES');
 
         for($i = 0; $i < 12; $i++) {
-            Zona::create([
-                'tipo' => $faker->randomElement(['patio', 'descarga']),
+            OrdenDeTrabajo::create([
+                'tipo' => $faker->randomElement(['carga', 'descarga']),
+                'estado' => $faker->randomElement(['pendiente', 'en curso', 'completada']),
+                'prioridad' => $faker->randomElement(['alta', 'media', 'baja']),
+
                 'created_at' => date('Y-m-d'),
                 'updated_at' => date('Y-m-d')
             ]);
         }
-
     }
 }

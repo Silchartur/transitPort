@@ -23,9 +23,16 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
+            BuqueSeeder::class,
             PatioSeeder::class,
-            ZonasSeeder::class,
-            ParkingsSeeder::class
+            ZonaSeeder::class,
+            ContenedorSeeder::class,
+            ParkingSeeder::class,
+            GestorSeeder::class,
+            AdministrativoSeeder::class,
+            OrdenDeTrabajoSeeder::class,
+            OperarioSeeder::class,
+
         ]);
     }
 }
