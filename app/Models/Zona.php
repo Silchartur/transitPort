@@ -9,22 +9,6 @@ class Zona extends Model
     protected $table = 'zonas';
     protected $fillable = ['tipo', 'activa'];
 
-    protected static function booted() {
-
-        static::created(function ($zona) {
-
-            $prefijos = [
-                'descarga' => 'ZD-',
-                'patio' => 'ZP-',
-            ];
-
-            $prefijo = $prefijos[$zona->tipo];
-
-            $zona->codigo = $prefijo . $zona->id;
-            $zona->save();
-        });
-    }
-
     public function parkings() {
 
         return $this->hasMany(Parking::class);

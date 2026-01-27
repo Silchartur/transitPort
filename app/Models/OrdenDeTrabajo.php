@@ -10,21 +10,6 @@ class OrdenDeTrabajo extends Model
     protected $fillable = ['tipo', 'estado', 'prioridad'];
     //hay que poner en fillable las foreign keys? como origen (buque), destino (zona patio), etc?
 
-    protected static function booted() {
-
-        static::created(function ($orden) {
-
-            $prefijos = [
-                'carga' => 'OC-',
-                'descarga' => 'OD-',
-            ];
-
-            $prefijo = $prefijos[$orden->tipo];
-            $orden->codigo = $prefijo . $orden->id;
-            $orden->save();
-        });
-    }
-
     public function administrativo() {
 
         return $this->belongsTo(Administrativo::class);

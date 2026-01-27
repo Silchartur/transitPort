@@ -13,14 +13,4 @@ class Gestor extends Model
 
         return $this->hasMany(Grua::class);
     }
-
-
-    protected static function booted()
-    {
-        static::created(function ($gestor) {
-            $gestor->codigo = "G-" . $gestor->id;
-            $gestor->save();
-        });
-    }
-
 }

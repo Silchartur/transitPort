@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('parkings', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo')->unique()->nullable();
             $table->boolean('disponible')->default(true);
             $table->boolean('activa')->default(true);
             $table->foreignId('zona_id')->constrained('zonas')->cascadeOnDelete()->cascadeOnUpdate();

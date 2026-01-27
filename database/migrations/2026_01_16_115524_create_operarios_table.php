@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('operarios', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo')->unique()->nullable();
             $table->text('tipo');
             $table->text('nombre');
             $table->text('apellidos');
             $table->text('email');
+            $table->text('contrasenya')->default('operario1234');
             $table->integer('telefono');
             $table->text('imagen');
             $table->timestamps();

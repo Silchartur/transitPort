@@ -28,15 +28,6 @@ class Contenedor extends Model
 
         return $this->hasMany(Grua::class);
     }
-
-
-      protected static function booted()
-    {
-        static::created(function ($contenedor) {
-            $contenedor->codigo = "C-" . $contenedor->id;
-            $contenedor->save();
-        });
-    }
 }
 
 

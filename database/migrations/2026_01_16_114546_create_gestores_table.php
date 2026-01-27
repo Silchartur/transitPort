@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('gestores', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo')->unique()->nullable();
             $table->text('nombre');
             $table->text('apellidos');
             $table->text('email');
+            $table->text('contrasenya')->default('gestor1234');
             $table->integer('telefono');
             $table->text('imagen');
             $table->timestamps();

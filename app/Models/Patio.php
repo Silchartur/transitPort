@@ -23,15 +23,6 @@ class Patio extends Model
 
         return $this->hasMany(Zona::class);
     }
-
-    protected static function booted()
-    {
-
-        static::created(function ($patio) {
-            $patio->codigo = "P-" . $patio->id;
-            $patio->save();
-        });
-    }
 }
 
 

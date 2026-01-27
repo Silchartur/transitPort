@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('administrativos', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo')->unique()->nullable();
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('email');
+            $table->text('contrasenya')->default('administrativo1234');
             $table->integer('telefono');
             $table->text('imagen');
             $table->timestamps();

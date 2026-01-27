@@ -19,12 +19,4 @@ class Operario extends Model
         return $this->hasMany(OrdenDeTrabajo::class);
     }
 
-    protected static function booted()
-    {
-        static::created(function ($operario) {
-            $operario->codigo = "O-" . $operario->id;
-            $operario->save();
-        });
-    }
-
 }

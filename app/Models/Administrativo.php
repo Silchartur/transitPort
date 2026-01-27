@@ -14,12 +14,4 @@ class Administrativo extends Model
         return $this->hasMany(OrdenDeTrabajo::class);
     }
 
-    protected static function booted()
-    {
-        static::created(function ($administrativo) {
-            $administrativo->codigo = "A-" . $administrativo->id;
-            $administrativo->save();
-        });
-    }
-
 }

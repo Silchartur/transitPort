@@ -22,7 +22,10 @@ class OrdenDeTrabajoSeeder extends Seeder
                 'tipo' => $faker->randomElement(['carga', 'descarga']),
                 'estado' => $faker->randomElement(['pendiente', 'en curso', 'completada']),
                 'prioridad' => $faker->randomElement(['alta', 'media', 'baja']),
-
+                'administrativo_id' => $faker->randomElement([1, 2, 3, 4]),  // administrativo
+                'contenedor_id' => $faker->randomElement([1, 2, 3, 4]),  // contendor
+                'destino' => $faker->randomElement([1, 2, 3, 4]),  // zona
+                'origen' => $faker->randomElement([1, 2, 3, 4]),  // buque
                 'created_at' => date('Y-m-d'),
                 'updated_at' => date('Y-m-d')
             ]);

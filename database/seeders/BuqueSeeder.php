@@ -23,7 +23,6 @@ class BuqueSeeder extends Seeder
             Buque::create([
                 'nombre' => $faker->name(),
                 'tipo' => $faker->catchPhrase(),
-                'companyia' => $faker->company(),
                 'capacidad' => $faker->buildingNumber(),
                 'estado' => $faker->randomElement(['salido', 'en espera', 'atracado']),
                 'created_at' => date('Y-m-d'),
