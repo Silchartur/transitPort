@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('contrasenya')->default('administrativo1234');
             $table->integer('telefono');
             $table->text('imagen');
+            $table->text('observaciones');
             $table->timestamps();
         });
     }

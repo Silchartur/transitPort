@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('buques', function (Blueprint $table) {
             $table->id();
-            $table->text('nombre');
-            $table->text('tipo');
+            $table->string('nombre');
+            $table->string('tipo');
             $table->integer('capacidad');
             $table->enum('estado', ['salido', 'en espera', 'atracado'])->default('en espera');
+            $table->text('observaciones');
             $table->timestamps();
         });
     }

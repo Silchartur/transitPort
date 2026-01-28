@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('gestores', function (Blueprint $table) {
             $table->id();
-            $table->text('nombre');
-            $table->text('apellidos');
-            $table->text('email');
-            $table->text('contrasenya')->default('gestor1234');
+            $table->string('nombre');
+            $table->string('apellidos');
+            $table->string('email');
+            $table->string('contrasenya')->default('gestor1234');
             $table->integer('telefono');
             $table->text('imagen');
+            $table->text('observaciones');
             $table->timestamps();
         });
     }

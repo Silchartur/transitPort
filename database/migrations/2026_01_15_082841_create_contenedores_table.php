@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('num_serie');
             $table->string('companyia');
             $table->boolean('existe');
+            $table->text('observaciones');
             $table->timestamps();
 
             $table->foreignId('buque_id')->constrained('buques');
