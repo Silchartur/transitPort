@@ -40,9 +40,9 @@ class BuquesController extends Controller
         }
     }
 
-    public function buscarBuquePorId(Request $request) {
+    public function buscarBuquePorId($id) {
 
-        $buque = Buque::findOrFail($request->id);
+        $buque = Buque::findOrFail($id);
 
         return $buque;
     }
@@ -74,12 +74,4 @@ class BuquesController extends Controller
         }
     }
 
-    public function eliminarBuque(Request $request) {
-
-        $buque = Buque::destroy($request->id);
-
-        return response()->json([
-            'message' => 'Buque con id '. $buque .' borrado con éxito.'
-        ], 201);
-    }
 }
