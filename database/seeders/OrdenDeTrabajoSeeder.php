@@ -27,7 +27,8 @@ class OrdenDeTrabajoSeeder extends Seeder
                 'destino' => $faker->randomElement([1, 2, 3, 4]),  // zona
                 'origen' => $faker->randomElement([1, 2, 3, 4]),  // buque
                 'created_at' => date('Y-m-d'),
-                'updated_at' => date('Y-m-d')
+                'updated_at' => date('Y-m-d'),
+                'observaciones' => $faker->catchPhrase()
             ]);
         }
     }

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->text('nombre');
             $table->text('apellidos');
             $table->text('email');
-            $table->text('contrasenya')->default('operario1234');
+            $table->text('contrasenya');
             $table->integer('telefono');
             $table->text('imagen');
+            $table->text('observaciones');
             $table->timestamps();
         });
     }

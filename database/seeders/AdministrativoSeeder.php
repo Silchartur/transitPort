@@ -26,7 +26,9 @@ class AdministrativoSeeder extends Seeder
                 'telefono' => $faker->buildingNumber(),
                 'imagen' => $faker->url(),
                 'created_at' => date('Y-m-d'),
-                'updated_at' => date('Y-m-d')
+                'updated_at' => date('Y-m-d'),
+                'observaciones' => $faker->catchPhrase(),
+                'contrasenya'=>$faker->password()
             ]);
         }
     }

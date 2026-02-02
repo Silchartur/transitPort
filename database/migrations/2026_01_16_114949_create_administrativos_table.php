@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('email');
-            $table->text('contrasenya')->default('administrativo1234');
+            $table->text('contrasenya');
             $table->integer('telefono');
             $table->text('imagen');
             $table->text('observaciones');

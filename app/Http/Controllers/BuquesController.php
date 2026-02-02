@@ -10,7 +10,7 @@ class BuquesController extends Controller
 
         $buques = Buque::all();
 
-        return $buques;
+        return response()->json($buques);
     }
 
     public function crearBuque(Request $request) {
@@ -18,9 +18,9 @@ class BuquesController extends Controller
         $validatedData = $request->validate([
             'nombre' => 'required|string',
             'tipo' => 'required|string',
-            'capacidad' => 'required|integer:strict',
+            'capacidad' => 'required|integer',
             'estado' => 'in:salido,en espera, atracado',
-            'observaciones' => 'nullable'
+            'observaciones' => 'nullable|string'
         ]);
 
         try {
@@ -52,8 +52,9 @@ class BuquesController extends Controller
         $validatedData = $request->validate([
             'nombre' => 'required|string',
             'tipo' => 'required|string',
-            'capacidad' => 'required|integer:strict',
-            'estado' => 'in:salido,en espera, atracado'
+            'capacidad' => 'required|integer',
+            'estado' => 'in:salido,en espera,atracado',
+            'observaciones' => 'nullable|string'
         ]);
 
         try {

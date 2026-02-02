@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Buque extends Model
 {
     protected $table = "buques";
-    protected $fillable = ['nombre', 'tipo','capacidad', 'estado'];
+    protected $fillable = ['nombre', 'tipo', 'capacidad', 'estado', 'observaciones'];
 
     public function contenedores() {
 

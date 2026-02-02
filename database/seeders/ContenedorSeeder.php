@@ -28,7 +28,8 @@ class ContenedorSeeder extends Seeder
                     'companyia' => $faker->company(),
                     'existe' => $faker->boolean(),
                     'buque_id' => $buque->id,
-                    'patios_id' => $patio->id
+                    'patios_id' => $patio->id,
+                    'observaciones' => $faker->catchPhrase()
                 ]);
             }
         });

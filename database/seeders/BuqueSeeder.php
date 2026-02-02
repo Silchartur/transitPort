@@ -21,12 +21,13 @@ class BuqueSeeder extends Seeder
 
         for ($i = 0; $i < 10; $i++) {
             Buque::create([
-                'nombre' => $faker->name(),
+                'nombre' => $faker->firstName(),
                 'tipo' => $faker->catchPhrase(),
                 'capacidad' => $faker->buildingNumber(),
                 'estado' => $faker->randomElement(['salido', 'en espera', 'atracado']),
                 'created_at' => date('Y-m-d'),
-                'updated_at' => date('Y-m-d')
+                'updated_at' => date('Y-m-d'),
+                'observaciones' => $faker->catchPhrase()
             ]);
         }
     }
