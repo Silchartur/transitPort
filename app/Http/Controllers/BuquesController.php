@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class BuquesController extends Controller
 {
-    public function obtenerBuques(Request $request) {
+    public function obtenerBuques() {
 
         $buques = Buque::all();
 
