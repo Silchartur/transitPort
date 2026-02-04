@@ -8,16 +8,16 @@ class Grua extends Model
 {
 
     protected $table = 'gruas';
-    protected $fillable = ['tipo'];
+    protected $fillable = ['tipo', 'estado'];
 
     public function gestores() {
 
         return $this->belongsTo(Gestor::class);
     }
 
-    public function ordenesDeTrabajo() {
+    public function ordenes() {
 
-        return $this->hasMany(OrdenDeTrabajo::class);
+        return $this->hasMany(Orden::class);
     }
 
     public function contenedores() {
