@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\BuquesController;
 use App\Http\Controllers\ContenedoresController;
+use App\Http\Controllers\PatiosController;
+use App\Http\Controllers\ZonasController;
 use Illuminate\Support\Facades\Route;
 
 //RUTAS BUQUE
@@ -25,3 +27,13 @@ Route::get('/editarContenedor/{id}', [ContenedoresController::class, 'buscarCont
 Route::patch('/actualizarContenedor/{id}', [ContenedoresController::class, 'modificarContenedor']) -> name('modificarContenedor');
 
 Route::delete('/borrarContenedor/{id}', [ContenedoresController::class, 'eliminarContenedor']) -> name('eliminarContenedor');
+
+//RUTA PATIO
+Route::get('/obtenerPatio', [PatiosController::class, 'obtenerPatio'])->name('obtenerPatio');
+
+//RUTAS ZONAS
+Route::get('/obtenerZonas', [ZonasController::class, 'obtenerZonas'])->name('obtenerZonas');
+
+Route::get('/editarZonas/{id}', [ZonasController::class, 'buscarZonaPorId']) -> name('buscarZonaPorId');
+Route::patch('/actualizarZonas/{id}', [ZonasController::class, 'modicarEstadoZona']) -> name('modicarEstadoZona');
+

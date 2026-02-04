@@ -24,7 +24,7 @@ class BuqueSeeder extends Seeder
                 'nombre' => $faker->firstName(),
                 'tipo' => $faker->catchPhrase(),
                 'capacidad' => $faker->buildingNumber(),
-                'estado' => $faker->randomElement(['salido', 'en espera', 'atracado']),
+                'estado' => $faker->randomElement(['inactivo', 'en espera', 'atracado']),
                 'created_at' => date('Y-m-d'),
                 'updated_at' => date('Y-m-d'),
                 'observaciones' => $faker->catchPhrase()
