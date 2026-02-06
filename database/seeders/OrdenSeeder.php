@@ -20,7 +20,7 @@ class OrdenSeeder extends Seeder
         for($i = 0; $i < 12; $i++) {
             Orden::create([
                 'tipo' => $faker->randomElement(['carga', 'descarga']),
-                'estado' => $faker->randomElement(['pendiente', 'en curso', 'completada']),
+                'estado' => $faker->randomElement(['pendiente', 'en_proceso_sts', 'en_zona_desc', 'en_proceso_sc', 'completada']),
                 'prioridad' => $faker->randomElement(['alta', 'media', 'baja']),
                 'administrativo_id' => $faker->randomElement([1, 2, 3, 4]),  // administrativo
                 'contenedor_id' => $faker->randomElement([1, 2, 3, 4]),  // contendor

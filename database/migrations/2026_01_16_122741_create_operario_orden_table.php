@@ -22,7 +22,7 @@ return new class extends Migration
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
             $table->foreignId('orden_id')
-                  ->constrained('ordenesDeTrabajo')
+                  ->constrained('ordenes')
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
 

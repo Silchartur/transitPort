@@ -19,7 +19,7 @@ class BuqueSeeder extends Seeder
 
         $faker = Faker::create('es_ES');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             Buque::create([
                 'nombre' => $faker->firstName(),
                 'tipo' => $faker->catchPhrase(),
