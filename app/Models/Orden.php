@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrdenDeTrabajo extends Model
+class Orden extends Model
 {
-    protected $table = 'ordenesDeTrabajo';
+    protected $table = 'ordenes';
     protected $fillable = ['tipo', 'estado', 'prioridad'];
     //hay que poner en fillable las foreign keys? como origen (buque), destino (zona patio), etc?
 
@@ -27,6 +27,6 @@ class OrdenDeTrabajo extends Model
 
     public function gruas() {
 
-        return $this->hasMany(Grua::class);
+        return $this->belongsToMany(Grua::class);
     }
 }

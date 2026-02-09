@@ -14,9 +14,9 @@ class Operario extends Model
         return $this->hasMany(Grua::class);
     }
 
-    public function ordenesDeTrabajo() {
+    public function ordenes() {
 
-        return $this->hasMany(OrdenDeTrabajo::class);
+        return $this->belongsToMany(Orden::class);
     }
 
 }

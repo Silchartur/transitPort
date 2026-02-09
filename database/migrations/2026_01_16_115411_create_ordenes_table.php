@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ordenesDeTrabajo', function (Blueprint $table) {
+        Schema::create('ordenes', function (Blueprint $table) {
             $table->id();
             $table->enum('tipo', ['carga', 'descarga']);
-            $table->enum('estado', ['pendiente', 'en curso', 'completada'])->default('pendiente');
+            $table->enum('estado', ['pendiente', 'en_proceso_sts', 'en_zona_desc', 'en_proceso_sc', 'completada'])->default('pendiente');
             $table->enum('prioridad', ['alta', 'media', 'baja']);
             $table->foreignId('origen')->constrained('buques')->cascadeOnDelete();
             $table->foreignId('destino')->constrained('zonas')->cascadeOnDelete();

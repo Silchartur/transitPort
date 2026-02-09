@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             ParkingSeeder::class,
             GestorSeeder::class,
             AdministrativoSeeder::class,
-            OrdenDeTrabajoSeeder::class,
+            OrdenSeeder::class,
             OperarioSeeder::class,
 
         ]);
