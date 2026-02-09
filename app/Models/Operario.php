@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 // use Laravel\Sanctum\HasApiTokens;
 use Laravel\Passport\HasApiTokens;
 
-class Operario extends Model
+class Operario extends Authenticatable
 {
 
     use HasApiTokens, HasFactory, Notifiable;
