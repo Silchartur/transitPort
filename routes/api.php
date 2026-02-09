@@ -3,6 +3,7 @@
 use App\Http\Controllers\BuquesController;
 use App\Http\Controllers\ContenedoresController;
 use App\Http\Controllers\PatiosController;
+use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ZonasController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,4 +37,11 @@ Route::get('/obtenerZonas', [ZonasController::class, 'obtenerZonas'])->name('obt
 
 Route::get('/editarZonas/{id}', [ZonasController::class, 'buscarZonaPorId']) -> name('buscarZonaPorId');
 Route::patch('/actualizarZonas/{id}', [ZonasController::class, 'modicarEstadoZona']) -> name('modicarEstadoZona');
+
+//LOGIN y LOGOUT
+Route::post('/login/{rol}', [UsuariosController::class, 'login']);
+
+Route::middleware('auth:gestor,administrativo,operario')->group(function () {
+    Route::post('/logout', [UsuariosController::class, 'logout']);
+});
 

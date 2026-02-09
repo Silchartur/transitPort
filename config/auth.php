@@ -40,6 +40,18 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'gestor' => [
+            'driver' => 'passport',
+            'provider' => 'gestores'
+        ],
+        'administrativo' => [
+            'driver' => 'passport',
+            'provider' => 'administrativos'
+        ],
+        'operario' => [
+            'driver' => 'passport',
+            'provider' => 'operarios'
+        ],
     ],
 
     /*
@@ -64,6 +76,22 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
+        'operarios' => [
+            'driver' => 'eloquent',
+            //'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => App\Models\Operario::class,
+        ],
+
+        'gestores' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Gestor::class,
+        ],
+
+        'administrativos' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Administrativo::class,
+        ],
+
 
         // 'users' => [
         //     'driver' => 'database',
