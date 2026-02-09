@@ -17,7 +17,7 @@ class OrdenesController extends Controller
                 $orden->save();
 
                 $gruaSTS = $orden->gruas()->where('tipo', 'sts');
-
+                $operario = $gruaSTS->operarios();
             }
 
         }
