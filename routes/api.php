@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BuquesController;
 use App\Http\Controllers\ContenedoresController;
+use App\Http\Controllers\OperariosController;
 use App\Http\Controllers\PatiosController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ZonasController;
@@ -51,4 +52,6 @@ Route::middleware('auth:gestor')->group(function () {
 
     Route::get('/editarZonas/{id}', [ZonasController::class, 'buscarZonaPorId'])->name('buscarZonaPorId');
     Route::patch('/actualizarZonas/{id}', [ZonasController::class, 'modicarEstadoZona'])->name('modicarEstadoZona');
+
+    Route::get('/obtenerOperarios', [OperariosController::class, 'obtenerOperarios'])->name('obtenerOperarios');
 });
