@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\Buque;
+use App\Models\Parking;
 use App\Models\Patio;
 //protected $fillable = ['num__serie', 'companyia', 'existe'];
 class ContenedorSeeder extends Seeder
@@ -18,9 +19,9 @@ class ContenedorSeeder extends Seeder
     {
 
         $faker = Faker::create('es_ES');
-        $patio = Patio::first();
+        $parking = Parking::first();
 
-        Buque::all()->each(function ($buque) use ($faker, $patio) {
+        Buque::all()->each(function ($buque) use ($faker, $parking) {
 
             for ($i = 0; $i < 10; $i++) {
                 Contenedor::create([
@@ -28,7 +29,7 @@ class ContenedorSeeder extends Seeder
                     'companyia' => $faker->company(),
                     'existe' => $faker->boolean(),
                     'buque_id' => $buque->id,
-                    'patios_id' => $patio->id,
+                    'parking_id' => $parking->id,
                     'observaciones' => $faker->catchPhrase()
                 ]);
             }

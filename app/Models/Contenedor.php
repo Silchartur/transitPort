@@ -9,9 +9,9 @@ class Contenedor extends Model
     protected $table = "contenedores";
     protected $fillable = ['num__serie', 'companyia', 'existe', 'observaciones'];
 
-    public function patio(){
+    public function parking(){
 
-        return $this->belongsTo(Patio::class);
+        return $this->belongsTo(Parking::class);
     }
 
     public function buque() {
@@ -21,7 +21,7 @@ class Contenedor extends Model
 
     public function ordenesDeTrabajo() {
 
-        return $this->hasMany(OrdenDeTrabajo::class);
+        return $this->hasMany(Orden::class);
     }
 
     public function gruas() {
