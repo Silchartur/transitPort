@@ -70,7 +70,7 @@ class UsuariosController extends Controller
             ], 401);
         }
 
-        $user->token()->revoke();
+        $user->currentAccessToken()->delete();
 
         return response()->json([
             'success' => [
