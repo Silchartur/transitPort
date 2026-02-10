@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 // use Laravel\Sanctum\HasApiTokens;
 use Laravel\Passport\HasApiTokens;
 
-class Gestor extends Model
+class Gestor extends Authenticatable
 {
 
      use HasApiTokens, HasFactory, Notifiable;
