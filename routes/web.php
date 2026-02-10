@@ -11,31 +11,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//RUTAS DE GESTOS QUE INCLUYEN VISTAS EN LARAVEL
+//RUTAS DE GESTOR QUE INCLUYEN VISTAS EN LARAVEL
 Route::middleware('auth:gestor')->group(function () {
 
-    Route::post(
-        '/registro',
-        [UsuariosController::class, 'registro']
-    )->name('registro');
+    Route::post('/registro',[UsuariosController::class, 'registro'])->name('registro');
 
-    Route::get(
-        '/listadoUsuarios',
-        [UsuariosController::class, 'listadoUsuarios']
-    );
+    Route::get('/listadoUsuarios',[UsuariosController::class, 'listadoUsuarios']);
 
-    Route::put(
-        '/gestor/{id}',
-        [GestoresController::class, 'update']
-    );
+    Route::put('/gestor/{id}',[GestoresController::class, 'update']);
 
-    Route::put(
-        '/administrativo/{id}',
-        [AdministrativosController::class, 'update']
-    );
+    Route::put('/administrativo/{id}',[AdministrativosController::class, 'update']);
 
-    Route::put(
-        '/operario/{id}',
-        [OperariosController::class, 'update']
-    );
+    Route::put('/operario/{id}',[OperariosController::class, 'update']);
 });
