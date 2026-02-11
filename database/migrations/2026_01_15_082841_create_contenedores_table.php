@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean('existe');
             $table->text('observaciones');
             $table->timestamps();
-
+            $table->enum('ubicacion',['Buque', 'Patio', 'Zona de descarga', 'Parking'])->default('Buque');
             $table->foreignId('buque_id')->constrained('buques');
             $table->foreignId('parking_id')->constrained('parkings');
         });

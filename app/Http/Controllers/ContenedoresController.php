@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contenedor;
+use App\Models\Orden;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailables\Content;
 
 class ContenedoresController extends Controller
 {
-     public function obtenerContenedor() {
+    public function obtenerContenedor()
+    {
 
         $contenedor = Contenedor::all();
 
         return response()->json($contenedor);
     }
 
-    public function crearContenedor(Request $request) {
+    public function crearContenedor(Request $request)
+    {
 
         $validatedData = $request->validate([
             'num_serie' => 'required|string',
@@ -27,10 +31,9 @@ class ContenedoresController extends Controller
             $contenedor = Contenedor::create($validatedData);
 
             return response()->json([
-                'message' => 'Buque creado con éxito.',
+                'message' => 'Contenedor creado con éxito.',
                 'contenedor' => $contenedor
             ], 201);
-
         } catch (\Exception $e) {
 
             return response()->json([
@@ -40,17 +43,19 @@ class ContenedoresController extends Controller
         }
     }
 
-    public function buscarBuquePorId($id) {
+    public function buscarContenedorPorId($id)
+    {
 
         $contenedor = Contenedor::findOrFail($id);
 
         return $contenedor;
     }
 
-    public function modificarBuque(Request $request) {
+    public function modificarContenedor(Request $request)
+    {
 
         $validatedData = $request->validate([
-           'num_serie' => 'required|string',
+            'num_serie' => 'required|string',
             'companyia' => 'required|string',
             'existe' => 'required|boolean',
             'observaciones' => 'nullable|string'
@@ -61,10 +66,9 @@ class ContenedoresController extends Controller
             $contenedor->update($validatedData);
 
             return response()->json([
-                'message' => 'Buque actualizado con éxito.',
+                'message' => 'Contenedor actualizado con éxito.',
                 'buque' => $contenedor
             ], 200);
-
         } catch (\Exception $e) {
 
             return response()->json([
@@ -72,5 +76,40 @@ class ContenedoresController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function obtenerUbicacionContenedor($id)
+    {
+        $contenedor = Contenedor::findOrFail($id);
+        $orden = Orden::where('id_contenedor',$id)->first();
+        $parking = $contenedor->parking_id;
+        $ubicacion = $contenedor->ubicacion;
+
+        if (!$orden) {
+            return $parking ? 'Parking' : 'Buque';
+        }
+
+        if ($orden->tipo === 'descarga') {
+            switch ($orden->estado) {
+                case 'en_zona_desc':
+                    return 'Zona de descarga';
+                case 'pendiente':
+                    return 'Buque';
+                case 'completada':
+                    return 'Parking';
+            }
+        }
+
+        if ($orden->tipo === 'carga') {
+            switch ($orden->estado) {
+                case 'en_zona_desc':
+                    return 'Patio';
+                case 'pendiente':
+                    return 'Parking';
+                case 'completada':
+                    return 'Buque';
+            }
+        }
+
     }
 }

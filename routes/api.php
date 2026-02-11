@@ -41,6 +41,10 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
     Route::patch('/actualizarContenedor/{id}', [ContenedoresController::class, 'modificarContenedor'])->name('modificarContenedor');
 
     Route::delete('/borrarContenedor/{id}', [ContenedoresController::class, 'eliminarContenedor'])->name('eliminarContenedor');
+
+    //Saber ubicación contenedor
+    Route::get('/contenedor/{id}/ubicacion', [ContenedoresController::class, 'obtenerUbicacionContenedor']);
+
 });
 
 //MIDDLEWARE GESTOR
