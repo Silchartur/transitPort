@@ -34,4 +34,10 @@ class OperariosController extends Controller
             ])
             ->with('success', 'Operario actualizado correctamente');
     }
+
+    public function obtenerOperarios() {
+        $operarios = Operario::all();
+
+        return response()->json($operarios);
+    }
 }

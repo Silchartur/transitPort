@@ -49,6 +49,7 @@ Route::middleware('auth:gestor')->group(function () {
 
     //RUTAS ZONAS
     Route::get('/obtenerZonas', [ZonasController::class, 'obtenerZonas'])->name('obtenerZonas');
+    Route::get('/obtenerZonasDescarga', [ZonasController::class, 'obtenerZonasDescarga'])->name('obtenerZonasDescarga');
 
     Route::get('/editarZonas/{id}', [ZonasController::class, 'buscarZonaPorId'])->name('buscarZonaPorId');
     Route::patch('/actualizarZonas/{id}', [ZonasController::class, 'modicarEstadoZona'])->name('modicarEstadoZona');
