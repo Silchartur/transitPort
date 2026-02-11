@@ -13,6 +13,13 @@ class ZonasController extends Controller
         return response()->json($zonas);
     }
 
+    public function obtenerZonasDescarga() {
+
+        $zonasDescarga = Zona::all()->where('tipo', 'descarga');
+
+        return response()->json($zonasDescarga);
+    }
+
     public function buscarZonaPorId($id) {
 
         $zona = Zona::findOrFail($id);
