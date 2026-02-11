@@ -11,16 +11,16 @@ class PassportClientesSeeder extends Seeder
     {
         $clients = [
             [
-                'name' => 'Aplicador',
-                'provider' => 'aplicadores',
+                'name' => 'Gestor',
+                'provider' => 'gestores',
             ],
             [
-                'name' => 'Administrador',
-                'provider' => 'admins',
+                'name' => 'Administrativo',
+                'provider' => 'administrativos',
             ],
             [
-                'name' => 'JefeCampo',
-                'provider' => 'jefes',
+                'name' => 'Operario',
+                'provider' => 'operarios',
             ],
         ];
 

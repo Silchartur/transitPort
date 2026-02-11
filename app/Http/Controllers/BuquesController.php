@@ -19,7 +19,7 @@ class BuquesController extends Controller
             'nombre' => 'required|string',
             'tipo' => 'required|string',
             'capacidad' => 'required|integer',
-            'estado' => 'in:salido,en espera, atracado',
+            'estado' => 'in:inactivo,en espera, atracado',
             'observaciones' => 'nullable|string'
         ]);
 

@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('operario_grua', function (Blueprint $table) {
             $table->id();
-            $table->string('turno');
-            $table->date('fecha');
             $table->timestamps();
 
             $table->foreignId('operario_id')

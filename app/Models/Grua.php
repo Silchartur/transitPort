@@ -8,9 +8,9 @@ class Grua extends Model
 {
 
     protected $table = 'gruas';
-    protected $fillable = ['tipo', 'estado'];
+    protected $fillable = ['tipo', 'id_gestor', 'estado', 'id_zona', 'observaciones'];
 
-    public function gestores() {
+    public function gestor() {
 
         return $this->belongsTo(Gestor::class);
     }
@@ -25,19 +25,14 @@ class Grua extends Model
         return $this->hasMany(Contenedor::class);
     }
 
-    public function gruaSTS() {
+    public function zona() {
 
-        return $this->hasOne(Grua_sts::class);
-    }
-
-    public function gruaSC() {
-
-        return $this->hasOne(Grua_sc::class);
+        return $this->belongsTo(Zona::class);
     }
 
     public function operarios() {
 
-        return $this->belongsToMany(Operario::class);
+        return $this->belongsToMany(Operario::class, 'operario_grua', 'grua_id', 'operario_id');
     }
 
 }

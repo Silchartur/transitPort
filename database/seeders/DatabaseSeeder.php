@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             AdministrativoSeeder::class,
             OrdenSeeder::class,
             OperarioSeeder::class,
-
+            PassportClientesSeeder::class
         ]);
     }
 }

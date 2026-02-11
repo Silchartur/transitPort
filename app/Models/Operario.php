@@ -52,7 +52,7 @@ class Operario extends Authenticatable
 
     public function gruas() {
 
-        return $this->belongsToMany(Grua::class);
+        return $this->belongsToMany(Grua::class, 'operario_grua', 'operario_id', 'grua_id');
     }
 
     public function ordenes() {
