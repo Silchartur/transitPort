@@ -13,4 +13,8 @@ class Parking extends Model
 
         return $this->belongsTo(Zona::class);
     }
+
+    public function contenedores(){
+        return $this->hasMany(Contenedor::class);
+    }
 }
