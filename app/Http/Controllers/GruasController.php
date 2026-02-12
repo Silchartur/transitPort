@@ -101,4 +101,17 @@ class GruasController extends Controller
             ], 500);
         }
     }
+
+    public function eliminarGrua($id) {
+
+        $grua = Grua::findOrFail($id);
+
+        if (!$grua) {
+            return response().json(['message' => 'Grúa no encontrada'], 404);
+        }
+
+        $grua->delete();
+
+        return response().json(['message' => 'Grúa eliminada correctamente'], 200);
+    }
 }
