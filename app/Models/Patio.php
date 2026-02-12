@@ -10,9 +10,9 @@ class Patio extends Model
     protected $fillable = ['capacidad'];
 
 
-    public function gruas_sc() {
+    public function gruas() {
 
-        return $this->hasMany(Grua_sc::class);
+        return $this->hasMany(Grua::class);
     }
 
     public function zonas() {

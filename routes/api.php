@@ -4,6 +4,7 @@ use App\Http\Controllers\BuquesController;
 use App\Http\Controllers\ContenedoresController;
 use App\Http\Controllers\OperariosController;
 use App\Http\Controllers\PatiosController;
+use App\Http\Controllers\GruasController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ZonasController;
 use Illuminate\Support\Facades\Route;
@@ -59,4 +60,7 @@ Route::middleware('auth:gestor')->group(function () {
     Route::patch('/actualizarZonas/{id}', [ZonasController::class, 'modicarEstadoZona'])->name('modicarEstadoZona');
 
     Route::get('/obtenerOperarios', [OperariosController::class, 'obtenerOperarios'])->name('obtenerOperarios');
+
+    Route::get('/obtenerGruas', [GruasController::class, 'obtenerGruas'])->name('obtenerGruas');
+    Route::post('/crearGrua', [GruasController::class, 'crearGrua'])->name('crearGrua');
 });

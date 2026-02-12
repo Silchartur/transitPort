@@ -3,28 +3,43 @@
 namespace App\Http\Controllers;
 use App\Models\Grua;
 use Illuminate\Http\Request;
+use App\Models\Operario;
+use Illuminate\Support\Facades\Log;
 
 class GruasController extends Controller
 {
     public function obtenerGruas() {
 
-        $gruas = Grua::all();
+        $gruas = Grua::with('operarios')->get();
 
         return response()->json($gruas);
     }
 
     public function crearGrua(Request $request) {
 
-        $validatedData = $request->validate([
+        $request->validate([
             'tipo' => 'required|string',
-            'gestor' => 'required',
+            'id_gestor' => 'required',
             'estado' => 'in:disponible,ocupada',
-            'operario' => 'required',
+            'id_zona' => 'required',
+            'operarios' => 'required|array',
             'observaciones' => 'nullable|string'
         ]);
 
         try {
-            $grua = Grua::create($validatedData);
+
+            $operariosId = $request->input('operarios');
+            $data = [
+                'tipo' => $request->tipo,
+                'id_gestor' => $request->id_gestor,
+                'estado' => $request->estado,
+                'id_zona' => $request->id_zona,
+                'observaciones' => $request->observaciones
+            ];
+
+            $grua = Grua::create($data);
+
+            $grua->operarios()->attach($operariosId);
 
             return response()->json([
                 'message' => 'Grúa creada con éxito.',
@@ -34,8 +49,8 @@ class GruasController extends Controller
         } catch (\Exception $e) {
 
             return response()->json([
-                'message' => 'Error al crear el buque',
-                'error' => $e->getMessage()
+                'message' => 'Error al crear la grúa',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }

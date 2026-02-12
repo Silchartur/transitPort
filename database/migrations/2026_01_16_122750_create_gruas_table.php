@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('gruas', function (Blueprint $table) {
             $table->id();
             $table->enum('tipo', ['sts', 'sc']);
+            $table->enum('estado', ['disponible', 'ocupada']);
+            $table->text('observaciones');
             $table->foreignId('id_gestor')->constrained('gestores')->restrictOnDelete();
+            $table->foreignId('id_zona')->constrained('zonas')->restrictOnDelete();
             $table->timestamps();
         });
     }

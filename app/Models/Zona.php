@@ -19,4 +19,9 @@ class Zona extends Model
         return $this->belongsTo(Patio::class);
     }
 
+    public function gruas() {
+
+        return $this->hasMany(Grua::class);
+    }
+
 }
