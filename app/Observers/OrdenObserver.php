@@ -1,26 +1,37 @@
 <?php
 
+
 namespace App\Observers;
+
 
 use App\Models\Orden;
 
+
 class OrdenObserver
 {
-
     public function updated(Orden $orden)
     {
-
         $contenedor = $orden->contenedor;
 
-        if ($contenedor) {
 
+        if ($contenedor) {
             $nuevaUbicacion = $this->calcularUbicacion($orden, $contenedor);
 
-            $contenedor->update([
-                'ubicacion' => $nuevaUbicacion
-            ]);
+
+            if ($contenedor->ubicacion !== $nuevaUbicacion) {
+                $contenedor->update([
+                    'ubicacion' => $nuevaUbicacion
+                ]);
+            }
+        }
+
+
+
+        foreach ($orden->gruas as $grua) {
+            $this->cambiarEstadoGrua($orden, $grua);
         }
     }
+
 
     private function calcularUbicacion(Orden $orden, $contenedor)
     {
@@ -37,6 +48,7 @@ class OrdenObserver
                         return $contenedor->ubicacion;
                 }
 
+
             case 'carga':
                 switch ($orden->estado) {
                     case 'en_zona_desc':
@@ -49,22 +61,48 @@ class OrdenObserver
                         return $contenedor->ubicacion;
                 }
 
+
             default:
                 return $contenedor->parking_id ? 'Parking' : 'Buque';
         }
     }
 
-    public function cambiarEstadoGrua(Orden $orden, $grua){
 
+    public function cambiarEstadoGrua(Orden $orden, $grua)
+    {
         switch ($orden->estado) {
-            case 'pendiente':
 
+
+            case 'pendiente':
+            case 'completada':
+                $nuevoEstado = 'disponible';
                 break;
+
+
+            case 'en_proceso_sts':
+                $nuevoEstado = $grua->tipo === 'sts'
+                    ? 'ocupada'
+                    : 'disponible';
+                break;
+
+
+            case 'en_zona_desc':
+            case 'en_proceso_sc':
+                $nuevoEstado = $grua->tipo === 'sc'
+                    ? 'ocupada'
+                    : 'disponible';
+                break;
+
 
             default:
-                # code...
-                break;
+                return;
         }
 
+
+        if ($grua->estado !== $nuevoEstado) {
+            $grua->update([
+                'estado' => $nuevoEstado
+            ]);
+        }
     }
 }
