@@ -16,12 +16,12 @@ return new class extends Migration
             $table->enum('tipo', ['carga', 'descarga']);
             $table->enum('estado', ['pendiente', 'en_proceso_sts', 'en_zona_desc', 'en_proceso_sc', 'completada'])->default('pendiente');
             $table->enum('prioridad', ['alta', 'media', 'baja']);
-            $table->foreignId('origen')->constrained('buques')->cascadeOnDelete();
-            $table->foreignId('destino')->constrained('zonas')->cascadeOnDelete();
+            $table->foreignId('buque_id')->nullable()->constrained('buques');
+            $table->foreignId('parking_id')->nullable()->constrained('paarkings');
             $table->foreignId('contenedor_id')->constrained('contenedores')->cascadeOnDelete();
             $table->foreignId('administrativo_id')->constrained('administrativos')->cascadeOnDelete();
+            $table->text('observaciones')->nullable();
             $table->timestamps();
-            $table->text('observaciones');
         });
     }
 

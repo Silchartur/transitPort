@@ -57,7 +57,7 @@ class Operario extends Authenticatable
 
     public function ordenes() {
 
-        return $this->belongsToMany(Orden::class);
+        return $this->belongsToMany(Orden::class, 'operario_orden', 'operario_id', 'orden_id');
     }
 
 }

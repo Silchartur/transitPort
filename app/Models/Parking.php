@@ -11,7 +11,7 @@ class Parking extends Model
 
     public function zona() {
 
-        return $this->belongsTo(Zona::class);
+        return $this->belongsTo(Zona::class, 'id_zona');
     }
 
     public function contenedores(){

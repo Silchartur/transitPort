@@ -17,7 +17,7 @@ class Orden extends Model
 
     public function operarios() {
 
-        return $this->belongsToMany(Operario::class);
+        return $this->belongsToMany(Operario::class, 'operario_orden', 'orden_id', 'operario_id');
     }
 
     public function contenedor() {
@@ -27,6 +27,6 @@ class Orden extends Model
 
     public function gruas() {
 
-        return $this->belongsToMany(Grua::class);
+        return $this->belongsToMany(Grua::class, 'grua_orden', 'orden_id', 'grua_id');
     }
 }

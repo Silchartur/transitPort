@@ -11,7 +11,7 @@ class Zona extends Model
 
     public function parkings() {
 
-        return $this->hasMany(Parking::class);
+        return $this->hasMany(Parking::class, 'id_zona');
     }
 
     public function patio() {

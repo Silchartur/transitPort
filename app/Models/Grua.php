@@ -17,7 +17,7 @@ class Grua extends Model
 
     public function ordenes() {
 
-        return $this->belongsToMany(Orden::class);
+        return $this->belongsToMany(Orden::class, 'grua_orden', 'grua_id', 'orden_id');
     }
 
     public function contenedores() {
@@ -27,7 +27,7 @@ class Grua extends Model
 
     public function zona() {
 
-        return $this->belongsTo(Zona::class);
+        return $this->belongsTo(Zona::class, 'id_zona');
     }
 
     public function operarios() {
