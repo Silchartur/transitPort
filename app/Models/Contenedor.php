@@ -21,9 +21,9 @@ class Contenedor extends Model
     ];
 
 
-    public function parking()
+    public function parkings()
     {
-        return $this->hasMany(Parking::class);
+        return $this->belongsTo(Parking::class, 'parking_id');
     }
 
 
