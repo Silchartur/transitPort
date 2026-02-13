@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Administrativo;
 use App\Models\Gestor;
 use App\Models\Operario;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -121,66 +122,55 @@ class UsuariosController extends Controller
 
 
     public function registro(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'apellidos' => 'required|string|max:255',
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-            'rol' => 'required|in:gestor,administrativo,operario',
-            'observaciones' => 'nullable|string',
-            'telefono' => 'nullable|string',
-            'imagen' => 'nullable'
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'apellidos' => 'required|string|max:255',
+        'email' => 'required|email',
+        'password' => 'required|min:6',
+        'rol' => 'required|in:gestor,administrativo,operario',
+        'observaciones' => 'nullable|string',
+        'telefono' => 'nullable|string',
+        'imagen' => 'nullable'
+    ]);
 
-        try {
-            $data = [
-                'name' => $request->name,
-                'apellidos' => $request->apellidos,
-                'email' => $request->email,
-                'telefono' => $request->telefono,
-                'observaciones' => $request->observaciones,
-                'password' => Hash::make($request->password),
-                'imagen' => $request->imagen
-            ];
+    try {
+        $data = [
+            'name' => $request->name,
+            'apellidos' => $request->apellidos,
+            'email' => $request->email,
+            'telefono' => $request->telefono,
+            'observaciones' => $request->observaciones,
+            'password' => Hash::make($request->password),
+            'imagen' => $request->imagen
+        ];
 
-            switch ($request->rol) {
+        switch ($request->rol) {
+            case 'gestor':
+                $gestor = Gestor::create($data);
+                $gestor->createToken('TokenUsuario')->accessToken;
+                break;
 
-                case 'gestor':
-                    $gestor = Gestor::create($data);
-                    $token =  $gestor->createToken('TokenUsuario')->accessToken;
-                    return response()->json([
-                        'success' => [
-                            'token' => $token,
-                            'name' => $gestor->name,
-                        ]
-                    ], 201);
+            case 'administrativo':
+                $administrativo = Administrativo::create($data);
+                $administrativo->createToken('TokenUsuario')->accessToken;
+                break;
 
-                case 'administrativo':
-                    $administrativo = Administrativo::create($data);
-                    $token = $administrativo->createToken('TokenUsuario')->accessToken;
-                    return response()->json([
-                        'success' => [
-                            'token' => $token,
-                            'name' => $administrativo->name,
-                        ]
-                    ], 201);
-
-                case 'operario':
-                    $operario = Operario::create($data);
-                    $token = $operario->createToken('TokenUsuario')->accessToken;
-                    return response()->json([
-                        'success' => [
-                            'token' => $token,
-                            'name' => $operario->name,
-                        ]
-                    ], 201);
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'No se pudo registrar el usuario.',
-                'details' => $e->getMessage(),
-            ], 500);
+            case 'operario':
+                $operario = Operario::create($data);
+                $operario->createToken('TokenUsuario')->accessToken;
+                break;
         }
+
+        // Redirige a la ruta que carga la vista con todos los usuarios
+        return redirect()->route('listadoUsuarios');
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'No se pudo registrar el usuario.',
+            'details' => $e->getMessage(),
+        ], 500);
     }
+}
+
 }
