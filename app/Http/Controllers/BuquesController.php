@@ -13,6 +13,13 @@ class BuquesController extends Controller
         return response()->json($buques);
     }
 
+    public function obtenerBuquesConContenedores() {
+
+        $buques = Buque::with('contenedores')->get();
+
+        return response()->json($buques);
+    }
+
     public function crearBuque(Request $request) {
 
         $validatedData = $request->validate([

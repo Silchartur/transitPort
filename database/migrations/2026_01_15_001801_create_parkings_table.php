@@ -13,21 +13,11 @@ return new class extends Migration
     {
         Schema::create('parkings', function (Blueprint $table) {
             $table->id();
-            $table->boolean('disponible')->default(true);
+            $table->enum('estado', ['libre', 'ocupado']);
             $table->boolean('activa')->default(true);
             $table->foreignId('zona_id')->constrained('zonas')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('contenedor_id')->constrained('contenedores');
             $table->timestamps();
-            /*
-            en el modelo de Zona poner:
-                public function parkings() {
-                    return $this->hasMany(Parking::class);
-                }
-
-            y en el controlador esto:
-
-                $zona->update(['activa'=>false]);
-                $zona->parkings()->update(['activa'=>false]);
-            */
         });
     }
 

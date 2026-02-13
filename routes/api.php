@@ -5,6 +5,8 @@ use App\Http\Controllers\ContenedoresController;
 use App\Http\Controllers\OperariosController;
 use App\Http\Controllers\PatiosController;
 use App\Http\Controllers\GruasController;
+use App\Http\Controllers\OrdenesController;
+use App\Http\Controllers\ParkingsController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ZonasController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,7 @@ Route::middleware('auth:gestor,administrativo,operario')->group(function () {
 Route::middleware('auth:gestor,administrativo')->group(function () {
     //RUTAS BUQUE
     Route::get('/obtenerBuques', [BuquesController::class, 'obtenerBuques'])->name('obtenerBuques');
+    Route::get('/obtenerBuquesConContenedores', [BuquesController::class, 'obtenerBuquesConContenedores'])->name('obtenerBuquesConContenedores');
 
     Route::view('/insertarBuque', 'insertarBuque')->name('insertarBuque');
     Route::post('/crearBuque', [BuquesController::class, 'crearBuque'])->name('crearBuque');
@@ -45,6 +48,17 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
     //Saber ubicación contenedor
     Route::get('/contenedor/{id}/ubicacion', [ContenedoresController::class, 'obtenerUbicacionContenedor']);
 
+
+    Route::get('/obtenerOperarios', [OperariosController::class, 'obtenerOperarios'])->name('obtenerOperarios');
+
+    Route::get('/obtenerOrdenes', [OrdenesController::class, 'listadoOrdenes'])->name('obtenerOrdenes');
+
+    Route::get('/obtenerParkings', [ParkingsController::class, 'listadoParkings'])->name('obtenerParkings');
+
+    Route::get('/obtenerGruas', [GruasController::class, 'obtenerGruas'])->name('obtenerGruas');
+    Route::post('/crearGrua', [GruasController::class, 'crearGrua'])->name('crearGrua');
+    Route::patch('/actualizarGrua/{id}', [GruasController::class, 'modificarGrua'])->name('modificarGrua');
+
 });
 
 //MIDDLEWARE GESTOR
@@ -58,10 +72,4 @@ Route::middleware('auth:gestor')->group(function () {
 
     Route::get('/editarZonas/{id}', [ZonasController::class, 'buscarZonaPorId'])->name('buscarZonaPorId');
     Route::patch('/actualizarZonas/{id}', [ZonasController::class, 'modicarEstadoZona'])->name('modicarEstadoZona');
-
-    Route::get('/obtenerOperarios', [OperariosController::class, 'obtenerOperarios'])->name('obtenerOperarios');
-
-    Route::get('/obtenerGruas', [GruasController::class, 'obtenerGruas'])->name('obtenerGruas');
-    Route::post('/crearGrua', [GruasController::class, 'crearGrua'])->name('crearGrua');
-    Route::patch('/actualizarGrua/{id}', [GruasController::class, 'modificarGrua'])->name('modificarGrua');
 });

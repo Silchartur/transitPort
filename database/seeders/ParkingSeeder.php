@@ -22,7 +22,8 @@ class ParkingSeeder extends Seeder
             for ($i = 0; $i < 7; $i++) {
                 if ($zona->tipo == 'patio') {
                     Parking::create([
-                        'zona_id' => $zona->id
+                        'zona_id' => $zona->id,
+                        'estado' => 'libre'
                     ]);
                 }
             }

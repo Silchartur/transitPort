@@ -11,7 +11,7 @@ class Contenedor extends Model
 
     public function parking(){
 
-        return $this->belongsTo(Parking::class);
+        return $this->hasMany(Parking::class);
     }
 
     public function buque() {
