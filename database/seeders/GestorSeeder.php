@@ -22,7 +22,7 @@ class GestorSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => bcrypt('123456'),
                 'telefono' => $faker->numberBetween(600000000, 799999999),
-                'imagen' => 'https://i.pravatar.cc/150?u=' . $faker->unique()->numberBetween(1,1000),
+                'imagen' => 'https://i.pravatar.cc/300?u=' . $faker->unique()->safeEmail,
                 'observaciones' => $faker->text(200),
                 'remember_token' => Str::random(10),
                 'created_at' => now(),

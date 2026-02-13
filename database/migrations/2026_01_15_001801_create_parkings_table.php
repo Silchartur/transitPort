@@ -16,7 +16,6 @@ return new class extends Migration
             $table->enum('estado', ['libre', 'ocupado']);
             $table->boolean('activa')->default(true);
             $table->foreignId('zona_id')->constrained('zonas')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('contenedor_id')->constrained('contenedores');
             $table->timestamps();
         });
     }
