@@ -11,10 +11,16 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', Arial;
-            background: #e9edf2;
+
             height: 100%;
             overflow-y: auto;
             overflow-x: hidden;
+        }
+
+        h1 {
+            color: #2f5876;
+            margin-top: 0;
+
         }
 
         .main {
@@ -22,27 +28,6 @@
             height: 100%
         }
 
-        /* SIDEBAR */
-        .sidebar {
-            width: 230px;
-            background: #2f5876;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 15px;
-        }
-
-        .menu-item {
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            cursor: pointer;
-        }
-
-        .menu-item:hover,
-        .menu-item.active {
-            background: #24465f
-        }
 
         /* CONTENIDO */
         .contenido {
@@ -53,15 +38,15 @@
         /* LISTADO */
         .listado {
             flex: 1;
-            padding: 25px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
         }
 
         .barra-filtros {
             display: flex;
-            justify-content: space-between;
-            margin: 15px 0;
+            justify-content: start;
+            margin-bottom: 10px;
         }
 
         .lista-scroll {
@@ -71,7 +56,8 @@
         }
 
         .usuario-card {
-            background: #dce7ef;
+            background: #DFECF5;
+            color:#2A5677;
             border-radius: 14px;
             padding: 15px;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
@@ -101,8 +87,8 @@
 
         /* PANEL DERECHO */
         .detalle {
-            width: 40%;
-            background: #9fb6c7;
+            width: 30%;
+            background: #B7D0E1;
             padding: 25px;
             border-radius: 25px 0 0 25px;
         }
@@ -126,6 +112,7 @@
         .btn-accion {
             background: #5e7f98;
             color: white;
+            display: flex;
             border: none;
             border-radius: 8px;
             padding: 10px 22px;
@@ -146,6 +133,28 @@
             border-radius: 6px;
             text-decoration: none;
         }
+
+        .filtro_busqueda {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-anyadir {
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+        }
+
+        .btn-volver {
+            color: #dce7ef;
+            background-color: #5F84A2;
+            width: 85px;
+            height: 40px;
+        }
+
+        h2{
+            color: #2A5677;
+        }
     </style>
 </head>
 
@@ -153,23 +162,12 @@
 
     <div class="main">
 
-        <div class="sidebar">
-            <h3>TRANSITPORT</h3>
-            <div class="menu-item">Grúas</div>
-            <div class="menu-item">Patio</div>
-            <div class="menu-item active">Usuarios</div>
-            <div class="menu-item">Órdenes</div>
-            <div class="menu-item">Contenedores</div>
-            <div class="menu-item">Buques</div>
-            <div style="margin-top:auto" class="menu-item">Salir</div>
-        </div>
-
         <div class="contenido">
 
             @php
                 $todos = $gestores->concat($administrativos)->concat($operarios);
 
-                $porPagina = 6;
+                $porPagina = 8;
                 $pagina = request()->get('page', 1);
                 $inicio = ($pagina - 1) * $porPagina;
 
@@ -181,9 +179,21 @@
 
                 <h1>Listado de usuarios</h1>
 
-                <div class="barra-filtros">
-                    <div>Filtrar por:</div>
-                    <input type="text" id="busqueda" placeholder="Buscar usuario">
+                <div class="filtro_busqueda">
+                    <div class="barra-filtros">
+                        <label for="opciones">Filtrar por: </label>
+                        <br>
+                        <select name="opciones" id="opciones">
+                            <option value="todos">Todos Roles</option>
+                            <option value="gestor">Gestor</option>
+                            <option value="administrativo">Administrativo</option>
+                            <option value="operario">Operario</option>
+                        </select>
+                    </div>
+
+                    <div class="barra-busqueda">
+                        <input type="text" name="" id="">
+                    </div>
                 </div>
 
                 <div class="lista-scroll">
@@ -218,11 +228,12 @@
                     @endfor
                 </div>
 
-                <div class="barra-acciones">
-                    <form action="{{ route('registrarinicio') }}" method="GET">
-                        <button class="btn-accion">Añadir usuario +</button>
+                <div class="btn-anyadir">
+                    <form action="{{ route('registrar') }}" method="GET">
+                        <button type="submit" class="btn-accion">Añadir usuario +</button>
                     </form>
                 </div>
+
 
             </div>
 
@@ -231,7 +242,12 @@
                     <div class="panel-detalle">
 
                         <form method="GET" action="{{ route('listadoUsuarios') }}">
-                            <button>← Volver</button>
+                            <button class="btn-volver"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                    height="32" fill="currentColor" viewBox="0 0 256 256">
+                                    <path
+                                        d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z">
+                                    </path>
+                                </svg></button>
                         </form>
 
                         <h2>Detalles del usuario</h2>
@@ -239,11 +255,15 @@
                         <form method="POST" action="{{ route($rol . '_update', $usuarioSeleccionado->id) }}">
                             @csrf
                             @method('PUT')
-
+                            <label for="name">Nombre: </label>
                             <input name="name" value="{{ $usuarioSeleccionado->name }}" disabled>
+                            <label for="apellidos">Apellidos: </label>
                             <input name="apellidos" value="{{ $usuarioSeleccionado->apellidos }}" disabled>
+                            <label for="email">Email: </label>
                             <input name="email" value="{{ $usuarioSeleccionado->email }}" disabled>
+                            <label for="telefono">Teléfono: </label>
                             <input name="telefono" value="{{ $usuarioSeleccionado->telefono }}" disabled>
+                            <label for="observaciones">Observaciones: </label>
                             <input name="observaciones" value="{{ $usuarioSeleccionado->observaciones }}" disabled>
 
                             <button type="button" onclick="activarEdicion()">Editar</button>
