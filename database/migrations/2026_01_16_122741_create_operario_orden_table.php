@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('operario_orden', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha');
-            $table->time('hora_inicio');
-            $table->time('hora_fin');
+            $table->string('tipo')->nullable();
             //relaciones con operario y orden de trabajo
             $table->foreignId('operario_id')
                   ->constrained('operarios')

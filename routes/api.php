@@ -63,4 +63,5 @@ Route::middleware('auth:gestor')->group(function () {
 
     Route::get('/obtenerGruas', [GruasController::class, 'obtenerGruas'])->name('obtenerGruas');
     Route::post('/crearGrua', [GruasController::class, 'crearGrua'])->name('crearGrua');
+    Route::patch('/actualizarGrua/{id}', [GruasController::class, 'modificarGrua'])->name('modificarGrua');
 });

@@ -64,17 +64,29 @@ class GruasController extends Controller
 
     public function modificarGrua(Request $request) {
 
-        $validatedData = $request->validate([
+        $request->validate([
             'tipo' => 'required|string',
-            'gestor' => 'required',
+            'id_gestor' => 'required',
             'estado' => 'in:disponible,ocupada',
-            'operario' => 'required',
+            'id_zona' => 'required',
+            'operarios' => 'required|array',
             'observaciones' => 'nullable|string'
         ]);
 
         try {
+
             $grua = Grua::findOrFail($request['id']);
-            $grua->update($validatedData);
+            $operariosId = $request->input('operarios');
+            $data = [
+                'tipo' => $request->tipo,
+                'id_gestor' => $request->id_gestor,
+                'estado' => $request->estado,
+                'id_zona' => $request->id_zona,
+                'observaciones' => $request->observaciones
+            ];
+
+            $grua->update($data);
+            $grua->operarios()->sync($operariosId);
 
             return response()->json([
                 'message' => 'Grúa actualizada con éxito.',
@@ -88,5 +100,18 @@ class GruasController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function eliminarGrua($id) {
+
+        $grua = Grua::findOrFail($id);
+
+        if (!$grua) {
+            return response().json(['message' => 'Grúa no encontrada'], 404);
+        }
+
+        $grua->delete();
+
+        return response().json(['message' => 'Grúa eliminada correctamente'], 200);
     }
 }
