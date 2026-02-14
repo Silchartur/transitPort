@@ -42,13 +42,10 @@ class OrdenesController extends Controller
 
             return response()->json([
                 'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
             ], 500);
         }
 
     }
-
 
     function crearOrden(Request $request) {
 
@@ -76,10 +73,8 @@ class OrdenesController extends Controller
             'observaciones' => $request->observaciones
         ]);
 
-        $orden->operarios()->attach([
-            $request->operario_sts_id => ['tipo' => 'sts'],
-            $request->operario_sc_id => ['tipo' => 'sc']
-        ]);
+        $orden->operarioSTS()->attach($request->operario_sts_id);
+        $orden->operarioSC()->attach($request->operario_sc_id);
 
         $orden->gruas()->attach([
             $request->grua_sts_id,

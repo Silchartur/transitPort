@@ -52,6 +52,7 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
     Route::get('/obtenerOperarios', [OperariosController::class, 'obtenerOperarios'])->name('obtenerOperarios');
 
     Route::get('/obtenerOrdenes', [OrdenesController::class, 'listadoOrdenes'])->name('obtenerOrdenes');
+    Route::patch('/actualizarOrden/{id}', [OrdenesController::class, 'modificarOrden'])->name('modificarOrden');
 
     Route::get('/obtenerParkings', [ParkingsController::class, 'listadoParkings'])->name('obtenerParkings');
 
@@ -59,6 +60,11 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
     Route::post('/crearGrua', [GruasController::class, 'crearGrua'])->name('crearGrua');
     Route::patch('/actualizarGrua/{id}', [GruasController::class, 'modificarGrua'])->name('modificarGrua');
 
+});
+
+Route::middleware('auth:administrativo')->group(function () {
+    
+    Route::patch('/crearOrden', [OrdenesController::class, 'crearOrden'])->name('crearOrden');
 });
 
 //MIDDLEWARE GESTOR
