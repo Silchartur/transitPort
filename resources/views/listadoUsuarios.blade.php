@@ -215,6 +215,7 @@
                                 <input type="hidden" name="id" value="{{ $usuario->id }}">
                                 <input type="hidden" name="rol" value="{{ $usuario->rol }}">
                                 <button class="btn-detalle">Detalles</button>
+                                <butto class="btn-borrar">Borrar</butto>
                             </form>
 
                         </div>
@@ -283,6 +284,10 @@
             document.querySelectorAll('.panel-detalle input')
                 .forEach(el => el.disabled = false);
             document.getElementById('btnGuardar').hidden = false;
+        }
+
+        function activarBorrado(){
+            
         }
     </script>
 
