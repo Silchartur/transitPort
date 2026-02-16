@@ -48,8 +48,9 @@ class ContenedoresController extends Controller
 
 
             return response()->json([
-                'message' => 'Error al crear el contenedor',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
             ], 500);
         }
     }
