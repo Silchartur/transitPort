@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PatiosController as ApiPatiosController;
 use App\Http\Controllers\BuquesController;
 use App\Http\Controllers\ContenedoresController;
 use App\Http\Controllers\OperariosController;
@@ -11,7 +12,15 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ZonasController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/obtenerContenedor', [ContenedoresController::class, 'obtenerContenedor'])->name('obtenerContenedor');
 
+    Route::view('/insertarContenedor', 'insertarContenedor')->name('insertarContenedor');
+    Route::post('/crearContenedor', [ContenedoresController::class, 'crearContenedor'])->name('crearContenedor');
+
+    Route::get('/editarContenedor/{id}', [ContenedoresController::class, 'buscarContenedorPorId'])->name('buscarContenedorPorId');
+    Route::patch('/actualizarContenedor/{id}', [ContenedoresController::class, 'modificarContenedor'])->name('modificarContenedor');
+
+    Route::delete('/borrarContenedor/{id}', [ContenedoresController::class, 'eliminarContenedor'])->name('eliminarContenedor');
 //LOGIN y LOGOUT
 Route::post('/login/{rol}', [UsuariosController::class, 'login']);
 
@@ -19,6 +28,10 @@ Route::post('/login/{rol}', [UsuariosController::class, 'login']);
 Route::middleware('auth:gestor,administrativo,operario')->group(function () {
     Route::post('/logout', [UsuariosController::class, 'logout']);
 });
+
+
+Route::get('/patio', [PatiosController::class, 'index']);
+
 
 //MIDDLEWARE GESTOR Y ADMINISTRATIVO
 Route::middleware('auth:gestor,administrativo')->group(function () {
@@ -35,15 +48,7 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
     Route::delete('/borrarBuque/{id}', [BuquesController::class, 'eliminarBuque'])->name('eliminarBuque');
 
     //RUTAS CONTENEDOR
-    Route::get('/obtenerContenedor', [ContenedoresController::class, 'obtenerContenedor'])->name('obtenerContenedor');
-
-    Route::view('/insertarContenedor', 'insertarContenedor')->name('insertarContenedor');
-    Route::post('/crearContenedor', [ContenedoresController::class, 'crearContenedor'])->name('crearContenedor');
-
-    Route::get('/editarContenedor/{id}', [ContenedoresController::class, 'buscarContenedorPorId'])->name('buscarContenedorPorId');
-    Route::patch('/actualizarContenedor/{id}', [ContenedoresController::class, 'modificarContenedor'])->name('modificarContenedor');
-
-    Route::delete('/borrarContenedor/{id}', [ContenedoresController::class, 'eliminarContenedor'])->name('eliminarContenedor');
+    
 
     //Saber ubicación contenedor
     Route::get('/contenedor/{id}/ubicacion', [ContenedoresController::class, 'obtenerUbicacionContenedor']);
@@ -64,7 +69,7 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
 //MIDDLEWARE GESTOR
 Route::middleware('auth:gestor')->group(function () {
     //RUTA PATIO
-    Route::get('/obtenerPatio', [PatiosController::class, 'obtenerPatio'])->name('obtenerPatio');
+    //Route::get('/obtenerPatio', [PatiosController::class, 'obtenerPatio'])->name('obtenerPatio');
 
     //RUTAS ZONAS
     Route::get('/obtenerZonas', [ZonasController::class, 'obtenerZonas'])->name('obtenerZonas');

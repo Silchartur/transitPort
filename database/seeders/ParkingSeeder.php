@@ -2,31 +2,28 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 use App\Models\Parking;
 use App\Models\Zona;
 
 class ParkingSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $faker = Faker::create('es_ES');
+        $zonas = Zona::where('tipo', 'patio')->get();
 
-        Zona::all()->each(function ($zona) {
+        foreach ($zonas as $zona) {
 
-            for ($i = 0; $i < 7; $i++) {
-                if ($zona->tipo == 'patio') {
-                    Parking::create([
-                        'zona_id' => $zona->id,
-                        'estado' => 'libre'
-                    ]);
-                }
+            for ($i = 1; $i <= 7; $i++) {
+
+                Parking::create([
+                    'zona_id' => $zona->id,
+                    'estado' => 'libre',
+                    'activa' => true,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
             }
-        });
+        }
     }
 }

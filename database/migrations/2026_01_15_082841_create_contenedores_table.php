@@ -19,7 +19,11 @@ return new class extends Migration
             $table->text('observaciones');
             $table->timestamps();
             $table->enum('ubicacion',['Buque', 'Patio', 'Zona de descarga', 'Parking'])->default('Buque');
-            $table->foreignId('buque_id')->constrained('buques');
+            $table->foreignId('buque_id')
+                    ->nullable()
+                    ->constrained('buques')
+                    ->restrictOnDelete();
+
             $table->foreignId('parking_id')->nullable()->constrained('parkings');
         });
     }
