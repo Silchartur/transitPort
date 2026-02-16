@@ -63,6 +63,7 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
 
 Route::middleware('auth:administrativo')->group(function () {
     Route::post('/crearOrden', [OrdenesController::class, 'crearOrden'])->name('crearOrden');
+    Route::patch('/actualizarOrden/{id}', [OrdenesController::class, 'modificarOrden'])->name('modificarOrden');
 });
 
 //MIDDLEWARE GESTOR

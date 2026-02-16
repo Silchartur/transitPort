@@ -70,7 +70,7 @@ class UsuariosController extends Controller
                 'error' => 'No autorizado'
             ], 401);
         }
-
+        
         $user->currentAccessToken()->delete();
 
         return response()->json([

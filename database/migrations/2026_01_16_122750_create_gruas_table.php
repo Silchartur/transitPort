@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->enum('tipo', ['sts', 'sc']);
             $table->enum('estado', ['disponible', 'ocupada']);
-            $table->text('observaciones');
+            $table->text('observaciones')->nullable();
             $table->foreignId('id_gestor')->constrained('gestores')->restrictOnDelete();
             $table->foreignId('id_zona')->constrained('zonas')->restrictOnDelete();
             $table->timestamps();

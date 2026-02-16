@@ -14,11 +14,18 @@ class Orden extends Model
         return $this->belongsTo(Administrativo::class);
     }
 
-    public function operarios() {
+    public function operario_sts() {
 
         return $this->belongsToMany(Operario::class, 'operario_orden', 'orden_id', 'operario_id')
-            ->withPivot('tipo')
-            ->withTimestamps();
+            ->wherePivot('tipo', 'sts')
+            ->withPivot('tipo');
+    }
+
+    public function operario_sc() {
+
+        return $this->belongsToMany(Operario::class, 'operario_orden', 'orden_id', 'operario_id')
+            ->wherePivot('tipo', 'sc')
+            ->withPivot('tipo');
     }
 
     public function contenedor() {
