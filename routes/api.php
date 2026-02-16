@@ -61,6 +61,10 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
 
 });
 
+Route::middleware('auth:administrativo')->group(function () {
+    Route::post('/crearOrden', [OrdenesController::class, 'crearOrden'])->name('crearOrden');
+});
+
 //MIDDLEWARE GESTOR
 Route::middleware('auth:gestor')->group(function () {
     //RUTA PATIO
