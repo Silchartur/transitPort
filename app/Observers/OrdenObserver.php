@@ -1,11 +1,9 @@
 <?php
 
-
 namespace App\Observers;
 
-
 use App\Models\Orden;
-
+use App\Models\Parking;
 
 class OrdenObserver
 {
@@ -13,96 +11,94 @@ class OrdenObserver
     {
         $contenedor = $orden->contenedor;
 
+        if (!$contenedor) {
+            return;
+        }
 
-        if ($contenedor) {
-            $nuevaUbicacion = $this->calcularUbicacion($orden, $contenedor);
+        // Si tenía parking, liberarlo antes
+        if ($contenedor->parking_id) {
 
+            $parkingAnterior = Parking::find($contenedor->parking_id);
 
-            if ($contenedor->ubicacion !== $nuevaUbicacion) {
-                $contenedor->update([
-                    'ubicacion' => $nuevaUbicacion
-                ]);
+            if ($parkingAnterior) {
+                $parkingAnterior->estado = 'libre';
+                $parkingAnterior->save();
             }
         }
 
-
-
-        foreach ($orden->gruas as $grua) {
-            $this->cambiarEstadoGrua($orden, $grua);
-        }
-    }
-
-
-    private function calcularUbicacion(Orden $orden, $contenedor)
-    {
-        switch ($orden->tipo) {
-            case 'descarga':
-                switch ($orden->estado) {
-                    case 'en_zona_desc':
-                        return 'Zona de descarga';
-                    case 'pendiente':
-                        return 'Buque';
-                    case 'completada':
-                        return 'Parking';
-                    default:
-                        return $contenedor->ubicacion;
-                }
-
-
-            case 'carga':
-                switch ($orden->estado) {
-                    case 'en_zona_desc':
-                        return 'Patio';
-                    case 'pendiente':
-                        return 'Parking';
-                    case 'completada':
-                        return 'Buque';
-                    default:
-                        return $contenedor->ubicacion;
-                }
-
-
-            default:
-                return $contenedor->parking_id ? 'Parking' : 'Buque';
-        }
-    }
-
-
-    public function cambiarEstadoGrua(Orden $orden, $grua)
-    {
         switch ($orden->estado) {
 
-
             case 'pendiente':
-            case 'completada':
-                $nuevoEstado = 'disponible';
-                break;
 
+                $contenedor->update([
+                    'ubicacion' => 'BUQUE',
+                    'parking_id' => null
+                ]);
 
-            case 'en_proceso_sts':
-                $nuevoEstado = $grua->tipo === 'sts'
-                    ? 'ocupada'
-                    : 'disponible';
                 break;
 
 
             case 'en_zona_desc':
-            case 'en_proceso_sc':
-                $nuevoEstado = $grua->tipo === 'sc'
-                    ? 'ocupada'
-                    : 'disponible';
+
+                $contenedor->update([
+                    'ubicacion' => 'ZONA_DESCARGA',
+                    'parking_id' => null
+                ]);
+
                 break;
 
 
-            default:
-                return;
+            case 'en_proceso_sc':
+
+                $contenedor->update([
+                    'ubicacion' => 'SC',
+                    'parking_id' => null
+                ]);
+
+                break;
+
+
+            case 'completada':
+
+                $parking = Parking::where('estado', 'libre')->first();
+
+                if ($parking) {
+
+                    $parking->estado = 'ocupado';
+                    $parking->save();
+
+                    $contenedor->update([
+                        'ubicacion' => 'PARKING',
+                        'parking_id' => $parking->id
+                    ]);
+                }
+
+                break;
         }
 
+        // Cambiar estado de grúas
+        foreach ($orden->gruas as $grua) {
 
-        if ($grua->estado !== $nuevoEstado) {
-            $grua->update([
-                'estado' => $nuevoEstado
-            ]);
+            if (
+                $orden->estado === 'pendiente' ||
+                $orden->estado === 'completada'
+            ) {
+                $grua->estado = 'disponible';
+            }
+
+            if ($orden->estado === 'en_proceso_sts' && $grua->tipo === 'sts') {
+                $grua->estado = 'ocupada';
+            }
+
+            if (
+                ($orden->estado === 'en_zona_desc' ||
+                 $orden->estado === 'en_proceso_sc')
+                && $grua->tipo === 'sc'
+            ) {
+                $grua->estado = 'ocupada';
+            }
+
+            $grua->save();
         }
     }
 }

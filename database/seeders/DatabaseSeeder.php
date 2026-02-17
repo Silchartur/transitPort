@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
+            GruaSeeder::class,
             BuqueSeeder::class,
             PatioSeeder::class,
             ZonaSeeder::class,

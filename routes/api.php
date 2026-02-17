@@ -58,7 +58,6 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
     Route::get('/obtenerGruas', [GruasController::class, 'obtenerGruas'])->name('obtenerGruas');
     Route::post('/crearGrua', [GruasController::class, 'crearGrua'])->name('crearGrua');
     Route::patch('/actualizarGrua/{id}', [GruasController::class, 'modificarGrua'])->name('modificarGrua');
-
 });
 
 Route::middleware('auth:administrativo')->group(function () {
@@ -69,7 +68,8 @@ Route::middleware('auth:administrativo')->group(function () {
 //MIDDLEWARE GESTOR
 Route::middleware('auth:gestor')->group(function () {
     //RUTA PATIO
-    Route::get('/obtenerPatio', [PatiosController::class, 'obtenerPatio'])->name('obtenerPatio');
+
+    Route::get('/patio', [PatiosController::class, 'index']);
 
     //RUTAS ZONAS
     Route::get('/obtenerZonas', [ZonasController::class, 'obtenerZonas'])->name('obtenerZonas');
