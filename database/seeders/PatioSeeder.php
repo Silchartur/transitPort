@@ -18,7 +18,7 @@ class PatioSeeder extends Seeder
 
         Patio::create([
 
-            'capacidad' => $faker->buildingNumber(),
+            'capacidad' => 84,
             'created_at' => date('Y-m-d'),
             'updated_at' => date('Y-m-d')
         ]);
