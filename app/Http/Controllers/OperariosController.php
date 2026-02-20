@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Operario;
+use App\Models\Grua;
 use Illuminate\Http\Request;
 
 class OperariosController extends Controller
@@ -39,5 +40,13 @@ class OperariosController extends Controller
         $operarios = Operario::all();
 
         return response()->json($operarios);
+    }
+
+    public function obtenerGruasOperario($id) {
+
+        $operario = Operario::findOrFail($id);
+        $gruas = $operario->gruas;
+
+        return response()->json($gruas);
     }
 }

@@ -7,31 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 class Orden extends Model
 {
     protected $table = 'ordenes';
-    protected $fillable = ['tipo', 'estado', 'prioridad'];
+    protected $fillable = ['tipo', 'estado', 'prioridad', 'buque_id', 'parking_id', 'contenedor_id', 'administrativo_id', 'observaciones'];
 
     public function administrativo() {
 
         return $this->belongsTo(Administrativo::class);
     }
 
-    /*
-    public function operarios() {
-
-        return $this->belongsToMany(Operario::class, 'operario_orden', 'orden_id', 'operario_id');
-    }*/
-
-    public function operarioSTS() {
+    public function operario_sts() {
 
         return $this->belongsToMany(Operario::class, 'operario_orden', 'orden_id', 'operario_id')
-            ->withPivot('tipo')
-            ->wherePivot('tipo', 'sts');
+            ->wherePivot('tipo', 'sts')
+            ->withPivot('tipo');
     }
 
-    public function operarioSC() {
+    public function operario_sc() {
 
         return $this->belongsToMany(Operario::class, 'operario_orden', 'orden_id', 'operario_id')
-            ->withPivot('tipo')
-            ->wherePivot('tipo', 'sc');
+            ->wherePivot('tipo', 'sc')
+            ->withPivot('tipo');
     }
 
     public function contenedor() {

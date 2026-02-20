@@ -13,6 +13,7 @@ Route::get('/', function () {
 Route::get('/listadoUsuarios',[UsuariosController::class, 'listadoUsuarios'])->name('listadoUsuarios');
 
 Route::view('/registro', 'registrar')->name('registrar');
+Route::delete('/borrarUsuario/{rol}/{id}', [UsuariosController::class, 'borrarUsuario'])->name('borrarUsuario');
 Route::post('/registro',[UsuariosController::class, 'registro'])->name('registro');
 
 

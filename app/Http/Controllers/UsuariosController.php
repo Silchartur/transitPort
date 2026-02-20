@@ -6,8 +6,10 @@ use App\Models\Administrativo;
 use App\Models\Gestor;
 use App\Models\Operario;
 use Illuminate\Container\Attributes\Auth;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
 
 class UsuariosController extends Controller
 {
@@ -61,7 +63,7 @@ class UsuariosController extends Controller
     }
 
 
-     public function logout(Request $request)
+    public function logout(Request $request)
     {
         $user = $request->user();
 
@@ -70,7 +72,7 @@ class UsuariosController extends Controller
                 'error' => 'No autorizado'
             ], 401);
         }
-
+        
         $user->currentAccessToken()->delete();
 
         return response()->json([
@@ -122,55 +124,77 @@ class UsuariosController extends Controller
 
 
     public function registro(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'apellidos' => 'required|string|max:255',
-        'email' => 'required|email',
-        'password' => 'required|min:6',
-        'rol' => 'required|in:gestor,administrativo,operario',
-        'observaciones' => 'nullable|string',
-        'telefono' => 'nullable|string',
-        'imagen' => 'nullable'
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+            'rol' => 'required|in:gestor,administrativo,operario',
+            'observaciones' => 'nullable|string',
+            'telefono' => 'nullable|string',
+            'imagen' => 'nullable'
+        ]);
 
-    try {
-        $data = [
-            'name' => $request->name,
-            'apellidos' => $request->apellidos,
-            'email' => $request->email,
-            'telefono' => $request->telefono,
-            'observaciones' => $request->observaciones,
-            'password' => Hash::make($request->password),
-            'imagen' => $request->imagen
-        ];
+        try {
+            $data = [
+                'name' => $request->name,
+                'apellidos' => $request->apellidos,
+                'email' => $request->email,
+                'telefono' => $request->telefono,
+                'observaciones' => $request->observaciones,
+                'password' => Hash::make($request->password),
+                'imagen' => $request->imagen
+            ];
 
-        switch ($request->rol) {
+            switch ($request->rol) {
+                case 'gestor':
+                    $gestor = Gestor::create($data);
+                    $gestor->createToken('TokenUsuario')->accessToken;
+                    break;
+
+                case 'administrativo':
+                    $administrativo = Administrativo::create($data);
+                    $administrativo->createToken('TokenUsuario')->accessToken;
+                    break;
+
+                case 'operario':
+                    $operario = Operario::create($data);
+                    $operario->createToken('TokenUsuario')->accessToken;
+                    break;
+            }
+
+            // Redirige a la ruta que carga la vista con todos los usuarios
+            return redirect()->route('listadoUsuarios');
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'No se pudo registrar el usuario.',
+                'details' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function borrarUsuario($rol, $id)
+    {
+        switch ($rol) {
             case 'gestor':
-                $gestor = Gestor::create($data);
-                $gestor->createToken('TokenUsuario')->accessToken;
+                $model = Gestor::class;
                 break;
 
             case 'administrativo':
-                $administrativo = Administrativo::create($data);
-                $administrativo->createToken('TokenUsuario')->accessToken;
+                $model = Administrativo::class;
                 break;
 
             case 'operario':
-                $operario = Operario::create($data);
-                $operario->createToken('TokenUsuario')->accessToken;
+                $model = Operario::class;
                 break;
+
+            default:
+                return response()->json(['error' => 'Rol no válido'], 400);
         }
 
-        // Redirige a la ruta que carga la vista con todos los usuarios
-        return redirect()->route('listadoUsuarios');
+        $model::where('id', $id)->delete();
 
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => 'No se pudo registrar el usuario.',
-            'details' => $e->getMessage(),
-        ], 500);
+        return redirect()->route('listadoUsuarios')->with('success', 'Usuario eliminado');
     }
-}
-
 }

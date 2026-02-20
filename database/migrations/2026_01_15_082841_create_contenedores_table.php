@@ -16,10 +16,14 @@ return new class extends Migration
             $table->string('num_serie');
             $table->string('companyia');
             $table->boolean('existe');
-            $table->text('observaciones');
+            $table->text('observaciones')->nullable();
             $table->timestamps();
             $table->enum('ubicacion',['Buque', 'Patio', 'Zona de descarga', 'Parking'])->default('Buque');
-            $table->foreignId('buque_id')->constrained('buques');
+            $table->foreignId('buque_id')
+                    ->nullable()
+                    ->constrained('buques')
+                    ->restrictOnDelete();
+
             $table->foreignId('parking_id')->nullable()->constrained('parkings');
         });
     }

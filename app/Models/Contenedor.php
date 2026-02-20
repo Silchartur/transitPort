@@ -21,7 +21,7 @@ class Contenedor extends Model
     ];
 
 
-    public function parkings()
+    public function parking()
     {
         return $this->belongsTo(Parking::class, 'parking_id');
     }

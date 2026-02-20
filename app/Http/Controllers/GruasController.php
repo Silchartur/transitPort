@@ -114,4 +114,5 @@ class GruasController extends Controller
 
         return response()->json(['message' => 'Grúa eliminada correctamente'], 200);
     }
+
 }
