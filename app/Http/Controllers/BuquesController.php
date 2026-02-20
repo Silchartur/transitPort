@@ -82,4 +82,14 @@ class BuquesController extends Controller
         }
     }
 
+    public function eliminarBuque($id){
+
+        $buque = Buque::findOrFail($id);
+
+        $buque->delete();
+
+           return response()->json(['message' => 'Eliminado']);
+    
+    }
+
 }

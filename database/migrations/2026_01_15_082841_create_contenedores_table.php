@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('observaciones')->nullable();
             $table->timestamps();
             $table->enum('ubicacion',['Buque', 'Patio', 'Zona de descarga', 'Parking'])->default('Buque');
+            $table->softDeletes();
             $table->foreignId('buque_id')
                     ->nullable()
                     ->constrained('buques')

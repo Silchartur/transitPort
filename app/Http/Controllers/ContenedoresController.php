@@ -12,15 +12,23 @@ use Illuminate\Mail\Mailables\Content;
 
 class ContenedoresController extends Controller
 {
-    public function obtenerContenedor()
-    {
-
-
+   public function obtenerContenedor()
+{
+    try {
+        // Forzamos a que nos diga quién está intentando entrar
+        // $user = auth()->user(); 
+        
         $contenedor = Contenedor::all();
-
-
         return response()->json($contenedor);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Error en el servidor',
+            'detalle' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine()
+        ], 500);
     }
+}
 
 
     public function crearContenedor(Request $request)
@@ -136,5 +144,15 @@ class ContenedoresController extends Controller
                     return 'Buque';
             }
         }
+    }
+
+    public function eliminarContenedor($id){
+
+        $contenedor = Contenedor::findOrFail($id);
+
+        $contenedor->delete();
+
+           return response()->json(['message' => 'Eliminado']);
+    
     }
 }

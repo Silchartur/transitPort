@@ -57,6 +57,13 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
 
     Route::post('/crearGrua', [GruasController::class, 'crearGrua'])->name('crearGrua');
     Route::patch('/actualizarGrua/{id}', [GruasController::class, 'modificarGrua'])->name('modificarGrua');
+
+    //grua
+     Route::delete('/borrarGrua/{id}', [GruasController::class, 'eliminarGrua'])->name('eliminarGrua');
+
+     //orden
+      Route::delete('/borrarOrden/{id}', [OrdenesController::class, 'eliminarOrden'])->name('eliminarOrden');
+
 });
 
 Route::middleware('auth:administrativo')->group(function () {
