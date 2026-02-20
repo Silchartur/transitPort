@@ -151,74 +151,86 @@ class OrdenesController extends Controller
 
     function actualizarEstado($id) {
 
-        $orden = Orden::findOrFail($id);
-        $user = auth()->guard('operario')->user();
+        try {
 
-        if($orden->tipo == 'descarga') {
+            $orden = Orden::findOrFail($id);
+            $user = auth()->guard('operario')->user();
 
-            switch ($orden->estado ) {
-                case 'pendiente':
-                    if($orden->operario_sts_id == $user->id) {
-                        $orden->estado = 'en_proceso_sts';
-                        $orden->save();
-                    }
-                    break;
+            $idOperarioSTS = $orden->operario_sts->first()->id;
+            $idOperarioSC = $orden->operario_sc->first()->id;
 
-                case 'en_proceso_sts':
-                    if($orden->operario_sts_id == $user->id) {
-                        $orden->estado = 'en_zona_desc';
-                        $orden->save();
-                    }
-                    break;
+            if($orden->tipo == 'descarga') {
 
-                case 'en_zona_desc':
-                    if($orden->operario_sc_id == $user->id) {
-                        $orden->estado = 'en_proceso_sc';
-                        $orden->save();
-                    }
-                    break;
+                switch ($orden->estado ) {
+                    case 'pendiente':
+                        if($idOperarioSTS == $user->id) {
+                            $orden->estado = 'en_proceso_sts';
+                            $orden->save();
+                        }
+                        break;
 
-                case 'en_proceso_sc':
-                    if($orden->operario_sc_id == $user->id) {
-                        $orden->estado = 'completada';
-                        $orden->save();
-                    }
-                    break;
+                    case 'en_proceso_sts':
+                        if($idOperarioSTS == $user->id) {
+                            $orden->estado = 'en_zona_desc';
+                            $orden->save();
+                        }
+                        break;
+
+                    case 'en_zona_desc':
+                        if($idOperarioSC == $user->id) {
+                            $orden->estado = 'en_proceso_sc';
+                            $orden->save();
+                        }
+                        break;
+
+                    case 'en_proceso_sc':
+                        if($idOperarioSC == $user->id) {
+                            $orden->estado = 'completada';
+                            $orden->save();
+                        }
+                        break;
+                }
+
+            } else if($orden->tipo === 'carga') {
+
+                switch ($orden->estado ) {
+                    case 'pendiente':
+                        if($idOperarioSC == $user->id) {
+                            $orden->estado = 'en_proceso_sc';
+                            $orden->save();
+                        }
+                        break;
+
+                    case 'en_proceso_sc':
+                        if($idOperarioSC == $user->id) {
+                            $orden->estado = 'en_zona_desc';
+                            $orden->save();
+                        }
+                        break;
+
+                    case 'en_zona_desc':
+                        if($idOperarioSTS == $user->id) {
+                            $orden->estado = 'en_proceso_sts';
+                            $orden->save();
+                        }
+                        break;
+
+                    case 'en_proceso_sts':
+                        if($idOperarioSTS == $user->id) {
+                            $orden->estado = 'completada';
+                            $orden->save();
+                        }
+                        break;
+                }
             }
 
-        } else if($orden->tipo === 'carga') {
+        } catch (\Exception $e) {
 
-            switch ($orden->estado ) {
-                case 'pendiente':
-                    if($orden->operario_sc_id == $user->id) {
-                        $orden->estado = 'en_proceso_sc';
-                        $orden->save();
-                    }
-                    break;
-
-                case 'en_proceso_sc':
-                    if($orden->operario_sc_id == $user->id) {
-                        $orden->estado = 'en_zona_desc';
-                        $orden->save();
-                    }
-                    break;
-
-                case 'en_zona_desc':
-                    if($orden->operario_sts_id == $user->id) {
-                        $orden->estado = 'en_proceso_sts';
-                        $orden->save();
-                    }
-                    break;
-
-                case 'en_proceso_sts':
-                    if($orden->operario_sts_id == $user->id) {
-                        $orden->estado = 'completada';
-                        $orden->save();
-                    }
-                    break;
-            }
+            return response()->json([
+                'message' => 'Error al actualizar la orden.',
+                'error' => $e->getMessage()
+            ], 500);
         }
 
-        return response()->json(['error' => 'No tienes permiso para este cambio'], 403);
     }
 }
