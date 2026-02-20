@@ -17,14 +17,21 @@ Route::post('/login/{rol}', [UsuariosController::class, 'login']);
 
 //MIDDLEWARE GESTOR, ADMINISTRATIVO Y OPERARIO
 Route::middleware('auth:gestor,administrativo,operario')->group(function () {
+    Route::get('/obtenerOrdenes', [OrdenesController::class, 'listadoOrdenes'])->name('obtenerOrdenes');
+    Route::get('/obtenerOperarios', [OperariosController::class, 'obtenerOperarios'])->name('obtenerOperarios');
+    Route::get('/obtenerBuques', [BuquesController::class, 'obtenerBuques'])->name('obtenerBuques');
+    Route::get('/obtenerBuquesConContenedores', [BuquesController::class, 'obtenerBuquesConContenedores'])->name('obtenerBuquesConContenedores');
+
+    Route::get('/obtenerParkings', [ParkingsController::class, 'listadoParkings'])->name('obtenerParkings');
+
+    Route::get('/obtenerGruas', [GruasController::class, 'obtenerGruas'])->name('obtenerGruas');
+
     Route::post('/logout', [UsuariosController::class, 'logout']);
 });
 
 //MIDDLEWARE GESTOR Y ADMINISTRATIVO
 Route::middleware('auth:gestor,administrativo')->group(function () {
     //RUTAS BUQUE
-    Route::get('/obtenerBuques', [BuquesController::class, 'obtenerBuques'])->name('obtenerBuques');
-    Route::get('/obtenerBuquesConContenedores', [BuquesController::class, 'obtenerBuquesConContenedores'])->name('obtenerBuquesConContenedores');
 
     Route::view('/insertarBuque', 'insertarBuque')->name('insertarBuque');
     Route::post('/crearBuque', [BuquesController::class, 'crearBuque'])->name('crearBuque');
@@ -48,14 +55,6 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
     //Saber ubicación contenedor
     Route::get('/contenedor/{id}/ubicacion', [ContenedoresController::class, 'obtenerUbicacionContenedor']);
 
-
-    Route::get('/obtenerOperarios', [OperariosController::class, 'obtenerOperarios'])->name('obtenerOperarios');
-
-    Route::get('/obtenerOrdenes', [OrdenesController::class, 'listadoOrdenes'])->name('obtenerOrdenes');
-
-    Route::get('/obtenerParkings', [ParkingsController::class, 'listadoParkings'])->name('obtenerParkings');
-
-    Route::get('/obtenerGruas', [GruasController::class, 'obtenerGruas'])->name('obtenerGruas');
     Route::post('/crearGrua', [GruasController::class, 'crearGrua'])->name('crearGrua');
     Route::patch('/actualizarGrua/{id}', [GruasController::class, 'modificarGrua'])->name('modificarGrua');
 
@@ -77,4 +76,9 @@ Route::middleware('auth:gestor')->group(function () {
 
     Route::get('/editarZonas/{id}', [ZonasController::class, 'buscarZonaPorId'])->name('buscarZonaPorId');
     Route::patch('/actualizarZonas/{id}', [ZonasController::class, 'modicarEstadoZona'])->name('modicarEstadoZona');
+});
+
+Route::middleware('auth:operario')->group(function () {
+    Route::get('/obtenerGruasOperario/{id}', [OperariosController::class, 'obtenerGruasOperario'])->name('obtenerGruasOperario');
+    Route::patch('/actualizarEstado/{id}', [OrdenesController::class, 'actualizarEstado'])->name('actualizarEstado');
 });
