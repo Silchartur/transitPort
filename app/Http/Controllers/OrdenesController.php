@@ -227,4 +227,14 @@ class OrdenesController extends Controller
         }
 
     }
+
+    public function eliminarOrden($id){
+
+        $orden = Orden::findOrFail($id);
+
+        $orden->delete();
+
+           return response()->json(['message' => 'Eliminado']);
+    
+    }
 }

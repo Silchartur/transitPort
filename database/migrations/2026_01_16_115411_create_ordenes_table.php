@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('contenedor_id')->constrained('contenedores')->cascadeOnDelete();
             $table->foreignId('administrativo_id')->constrained('administrativos')->cascadeOnDelete();
             $table->text('observaciones')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

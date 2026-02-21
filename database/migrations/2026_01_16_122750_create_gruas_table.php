@@ -16,6 +16,7 @@ return new class extends Migration
             $table->enum('tipo', ['sts', 'sc']);
             $table->enum('estado', ['disponible', 'ocupada']);
             $table->text('observaciones')->nullable();
+            $table->softDeletes();
             $table->foreignId('id_gestor')->onDelete('set null');
 
             $table->foreignId('id_zona')->constrained('zonas')->restrictOnDelete();
