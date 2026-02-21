@@ -19,7 +19,8 @@ class Contenedor extends Model
         'existe',
         'observaciones',
         'buque_id',
-        'parking_id'
+        'parking_id',
+        'ubicacion',
     ];
 
 

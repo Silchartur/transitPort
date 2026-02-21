@@ -60,7 +60,7 @@ class OrdenObserver
 
             case 'completada':
 
-                $parking = Parking::where('estado', 'libre')->first();
+                $parking = $orden->parking;
 
                 if ($parking) {
 

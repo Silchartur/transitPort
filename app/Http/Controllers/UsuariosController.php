@@ -56,8 +56,10 @@ class UsuariosController extends Controller
             'success' => [
                 'token' => $token,
                 'name' => $user->name,
+                'apellidos' => $user->apellidos,
                 'id' => $user->id,
                 'rol' => $rol,
+                'imagen' => $user->imagen,
             ]
         ]);
     }
