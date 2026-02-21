@@ -64,14 +64,13 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
 
     Route::get('/obtenerGruas', [GruasController::class, 'obtenerGruas'])->name('obtenerGruas');
 
-    Route::post('/crearGrua', [GruasController::class, 'crearGrua'])->name('crearGrua');
     Route::patch('/actualizarGrua/{id}', [GruasController::class, 'modificarGrua'])->name('modificarGrua');
 
     //grua
-     Route::delete('/borrarGrua/{id}', [GruasController::class, 'eliminarGrua'])->name('eliminarGrua');
+    Route::delete('/borrarGrua/{id}', [GruasController::class, 'eliminarGrua'])->name('eliminarGrua');
 
      //orden
-      Route::delete('/borrarOrden/{id}', [OrdenesController::class, 'eliminarOrden'])->name('eliminarOrden');
+    Route::delete('/borrarOrden/{id}', [OrdenesController::class, 'eliminarOrden'])->name('eliminarOrden');
 
 });
 
@@ -80,15 +79,9 @@ Route::middleware('auth:administrativo')->group(function () {
     Route::patch('/actualizarOrden/{id}', [OrdenesController::class, 'modificarOrden'])->name('modificarOrden');
 });
 
-Route::middleware('auth:administrativo')->group(function () {
-    
-    Route::patch('/crearOrden', [OrdenesController::class, 'crearOrden'])->name('crearOrden');
-});
-
 //MIDDLEWARE GESTOR
 Route::middleware('auth:gestor')->group(function () {
     //RUTA PATIO
-
     Route::get('/patio', [PatiosController::class, 'index']);
 
     //RUTAS ZONAS
@@ -97,6 +90,9 @@ Route::middleware('auth:gestor')->group(function () {
 
     Route::get('/editarZonas/{id}', [ZonasController::class, 'buscarZonaPorId'])->name('buscarZonaPorId');
     Route::patch('/actualizarZonas/{id}', [ZonasController::class, 'modicarEstadoZona'])->name('modicarEstadoZona');
+
+    //RUTA CREAR GRÚA
+    Route::post('/crearGrua', [GruasController::class, 'crearGrua'])->name('crearGrua');
 });
 
 Route::middleware('auth:operario')->group(function () {
