@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('tipo');
             $table->integer('capacidad');
             $table->enum('estado', ['inactivo', 'en espera', 'atracado'])->default('en espera');
-            $table->text('observaciones');
+            $table->text('observaciones')->nullable();
             $table->timestamps();
         });
     }

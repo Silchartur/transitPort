@@ -22,17 +22,17 @@ class OrdenesController extends Controller
 
                 return [
                     'id' => $orden->id,
-                    'tipo' => $orden->tipo ?? 'sin_tipo',
-                    'estado' => $orden->estado ?? 'pendiente',
-                    'prioridad' => $orden->prioridad ?? 'baja',
-                    'contenedor' => $orden->contenedor ?? null,
-                    'grua_sts' => $gruaSTS ?? null,
-                    'grua_sc' => $gruaSC ?? null,
-                    'operario_sts' => $operarioSTS ?? null,
-                    'operario_sc' => $operarioSC ?? null,
-                    'buque' => $orden->buque ?? null,
-                    'parking' => $orden->parking ?? null,
-                    'observaciones' => $orden->observaciones ?? '',
+                    'tipo' => $orden->tipo,
+                    'estado' => $orden->estado,
+                    'prioridad' => $orden->prioridad,
+                    'contenedor' => $orden->contenedor,
+                    'grua_sts' => $gruaSTS,
+                    'grua_sc' => $gruaSC,
+                    'operario_sts' => $operarioSTS,
+                    'operario_sc' => $operarioSC,
+                    'buque' => $orden->buque,
+                    'parking' => $orden->parking,
+                    'observaciones' => $orden->observaciones,
                     'gruas' => $orden->gruas,
                 ];
             });
