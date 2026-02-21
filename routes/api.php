@@ -21,7 +21,7 @@ Route::middleware('auth:gestor,administrativo,operario')->group(function () {
     Route::get('/obtenerOperarios', [OperariosController::class, 'obtenerOperarios'])->name('obtenerOperarios');
     Route::get('/obtenerBuques', [BuquesController::class, 'obtenerBuques'])->name('obtenerBuques');
     Route::get('/obtenerBuquesConContenedores', [BuquesController::class, 'obtenerBuquesConContenedores'])->name('obtenerBuquesConContenedores');
-
+    Route::get('/obtenerContenedor', [ContenedoresController::class, 'obtenerContenedor'])->name('obtenerContenedor');
     Route::get('/obtenerParkings', [ParkingsController::class, 'listadoParkings'])->name('obtenerParkings');
 
     Route::get('/obtenerGruas', [GruasController::class, 'obtenerGruas'])->name('obtenerGruas');
@@ -42,8 +42,6 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
     Route::delete('/borrarBuque/{id}', [BuquesController::class, 'eliminarBuque'])->name('eliminarBuque');
 
     //RUTAS CONTENEDOR
-    Route::get('/obtenerContenedor', [ContenedoresController::class, 'obtenerContenedor'])->name('obtenerContenedor');
-
     Route::view('/insertarContenedor', 'insertarContenedor')->name('insertarContenedor');
     Route::post('/crearContenedor', [ContenedoresController::class, 'crearContenedor'])->name('crearContenedor');
 
@@ -57,13 +55,8 @@ Route::middleware('auth:gestor,administrativo')->group(function () {
 
     Route::get('/obtenerOperarios', [OperariosController::class, 'obtenerOperarios'])->name('obtenerOperarios');
 
-    Route::get('/obtenerOrdenes', [OrdenesController::class, 'listadoOrdenes'])->name('obtenerOrdenes');
     Route::patch('/actualizarOrden/{id}', [OrdenesController::class, 'modificarOrden'])->name('modificarOrden');
-
-    Route::get('/obtenerParkings', [ParkingsController::class, 'listadoParkings'])->name('obtenerParkings');
-
-    Route::get('/obtenerGruas', [GruasController::class, 'obtenerGruas'])->name('obtenerGruas');
-
+    
     Route::patch('/actualizarGrua/{id}', [GruasController::class, 'modificarGrua'])->name('modificarGrua');
 
     //grua
