@@ -31,7 +31,7 @@ class OrdenObserver
             case 'pendiente':
 
                 $contenedor->update([
-                    'ubicacion' => 'BUQUE',
+                    'ubicacion' => 'Buque',
                     'parking_id' => null
                 ]);
 
@@ -41,7 +41,7 @@ class OrdenObserver
             case 'en_zona_desc':
 
                 $contenedor->update([
-                    'ubicacion' => 'ZONA_DESCARGA',
+                    'ubicacion' => 'Zona de descarga',
                     'parking_id' => null
                 ]);
 
@@ -51,7 +51,7 @@ class OrdenObserver
             case 'en_proceso_sc':
 
                 $contenedor->update([
-                    'ubicacion' => 'SC',
+                    'ubicacion' => 'Zona de descarga',
                     'parking_id' => null
                 ]);
 
@@ -68,7 +68,7 @@ class OrdenObserver
                     $parking->save();
 
                     $contenedor->update([
-                        'ubicacion' => 'PARKING',
+                        'ubicacion' => 'Parking',
                         'parking_id' => $parking->id
                     ]);
                 }
