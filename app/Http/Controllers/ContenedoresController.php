@@ -47,10 +47,6 @@ class ContenedoresController extends Controller
             $contenedor = Contenedor::create($validatedData);
 
 
-            // cargar relaciones para frontend
-            $contenedor->load(['buque', 'parking']);
-
-
             return response()->json($contenedor, 201);
         } catch (\Exception $e) {
 
