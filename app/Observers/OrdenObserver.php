@@ -26,15 +26,26 @@ class OrdenObserver
             }
         }
 
+        //$table->enum('estado', ['pendiente', 'en_proceso_sts', 'en_zona_desc', 'en_proceso_sc', 'completada'])
         switch ($orden->estado) {
 
             case 'pendiente':
 
-                $contenedor->update([
-                    'ubicacion' => 'Buque',
-                    'parking_id' => null
-                ]);
-
+                if ($orden->tipo === "descarga") {
+                    $contenedor->update([
+                        'ubicacion' => 'Buque',
+                        'parking_id' => null
+                    ]);
+                } else {
+                    $contenedor->update([
+                        'ubicacion' => 'Parking',
+                        'parking_id' => $orden->parking_id
+                    ]);
+                    //cambiamos el estao del parking a ocupado
+                    if ($orden->parking) {
+                        $orden->parking->update(['estado' => 'ocupado']);
+                    }
+                }
                 break;
 
 
@@ -47,30 +58,27 @@ class OrdenObserver
 
                 break;
 
-
-            case 'en_proceso_sc':
-
-                $contenedor->update([
-                    'ubicacion' => 'Zona de descarga',
-                    'parking_id' => null
-                ]);
-
-                break;
-
-
             case 'completada':
 
-                $parking = $orden->parking;
+                if ($orden->tipo === "descarga") {
+                    $parking = $orden->parking;
 
-                if ($parking) {
+                    if ($parking) {
 
-                    $parking->estado = 'ocupado';
-                    $parking->save();
+                        $parking->estado = 'ocupado';
+                        $parking->save();
 
-                    $contenedor->update([
-                        'ubicacion' => 'Parking',
-                        'parking_id' => $parking->id
-                    ]);
+                        $contenedor->update([
+                            'ubicacion' => 'Parking',
+                            'parking_id' => $parking->id
+                        ]);
+                    } else {
+
+                        $contenedor->update([
+                            'ubicacion' => 'Buque',
+                            'parking_id' => null
+                        ]);
+                    }
                 }
 
                 break;
@@ -86,16 +94,38 @@ class OrdenObserver
                 $grua->estado = 'disponible';
             }
 
-            if ($orden->estado === 'en_proceso_sts' && $grua->tipo === 'sts') {
-                $grua->estado = 'ocupada';
+            if ($orden->estado === 'en_proceso_sts') {
+
+                if ($grua->tipo === 'sts') {
+                    $grua->estado = 'ocupada';
+                } elseif ($grua->tipo === "sc") {
+                    $grua->estado = "disponible";
+                }
             }
 
-            if (
-                ($orden->estado === 'en_zona_desc' ||
-                 $orden->estado === 'en_proceso_sc')
-                && $grua->tipo === 'sc'
-            ) {
-                $grua->estado = 'ocupada';
+            if ($orden->estado === "en_zona_descarga") {
+                if ($orden->tipo === "descarga") {
+                    if ($grua->tipo === "sts") {
+                        $grua->estado = "disponible";
+                    } else {
+                        $grua->estado = "ocupada";
+                    }
+                } elseif ($orden->tipo === "carga") {
+                    if ($grua->tipo === "sts") {
+                        $grua->estado = "ocupada";
+                    } else {
+                        $grua->estado = "disponible";
+                    }
+                }
+            }
+
+            if ($orden->estado === 'en_proceso_sc') {
+
+                if ($grua->tipo === 'sts') {
+                    $grua->estado = 'disponible';
+                } elseif ($grua->tipo === "sc") {
+                    $grua->estado = "ocupada";
+                }
             }
 
             $grua->save();
