@@ -17,7 +17,10 @@ return new class extends Migration
             $table->enum('estado', ['disponible', 'ocupada']);
             $table->text('observaciones')->nullable();
             $table->softDeletes();
-            $table->foreignId('id_gestor')->onDelete('set null');
+            $table->foreignId('id_gestor')
+                ->nullable()
+                ->constrained('gestores')
+                ->nullOnDelete();
 
             $table->foreignId('id_zona')->constrained('zonas')->restrictOnDelete();
             $table->timestamps();

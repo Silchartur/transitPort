@@ -187,7 +187,7 @@
                 }
 
                 // Paginación manual
-                $porPagina = 8;
+                $porPagina = 6;
                 $pagina = request()->get('page', 1);
                 $inicio = ($pagina - 1) * $porPagina;
                 $usuariosPagina = $todos->slice($inicio, $porPagina);

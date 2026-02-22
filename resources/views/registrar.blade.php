@@ -118,7 +118,6 @@
             border-color: #5F84A2;
         }
 
-        /* Estilo para mensajes de error */
         .error-container {
             background-color: #fee2e2;
             color: #dc2626;
@@ -128,7 +127,7 @@
         }
 
         .icon-back {
-            transform: rotate(180deg); /* Volteamos la flecha que tenías en detalles */
+            transform: rotate(180deg); 
         }
     </style>
 </head>
