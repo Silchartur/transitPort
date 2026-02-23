@@ -123,11 +123,11 @@ class ContenedoresController extends Controller
                 case 'pendiente':
                     return 'Buque';
                 case 'en_proceso_sts':
-                    return 'Descargando del buque'
+                    return 'Descargando del buque';
                 case 'en_zona_desc':
                     return 'Zona de descarga';
                 case 'en_proceso_sc':
-                    return 'De camino al patio'
+                    return 'De camino al patio';
                 case 'completada':
                     return 'Parking';
             }
@@ -139,11 +139,11 @@ class ContenedoresController extends Controller
                 case 'pendiente':
                     return 'Parking';
                 case 'en_proceso_sc':
-                    return 'De camino a zona descarga'
+                    return 'De camino a zona descarga';
                 case 'en_zona_desc':
                     return 'Zona de descarga';
                 case 'en_proceso_sts':
-                    return 'Cargando al buque'
+                    return 'Cargando al buque';
                 case 'completada':
                     return 'Buque';
             }
