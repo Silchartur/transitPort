@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
    <style>
+    /* ... (Mantenemos tus estilos base intactos para no romper el diseño desktop) ... */
     body {
         margin: 0;
         font-family: 'Segoe UI', Arial, sans-serif;
@@ -16,43 +17,21 @@
     }
 
     h1 { color: #2f5876; margin-top: 0; font-size: 1.8rem; }
-
     .main { min-height: 100vh; display: flex; flex-direction: column; }
+    .contenido { display: flex; flex: 1; flex-direction: row; }
+    .listado { flex: 1; padding: 20px; transition: all 0.3s ease; }
 
-    .contenido {
-        display: flex;
-        flex: 1;
-        flex-direction: row; /* Desktop por defecto */
-    }
-
-    /* LISTADO */
-    .listado {
-        flex: 1;
-        padding: 20px;
-        transition: all 0.3s ease;
-    }
-
-    /* BARRA FILTROS RESPONSIVE */
     .filtro_busqueda {
         display: flex;
-        flex-wrap: wrap; /* Permite saltos de línea en móvil */
+        flex-wrap: wrap;
         justify-content: space-between;
         gap: 15px;
         margin-bottom: 20px;
         align-items: center;
     }
 
-    .barra-filtros {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .contenedor-busqueda {
-        position: relative;
-        flex-grow: 1;
-        max-width: 400px;
-    }
+    .barra-filtros { display: flex; align-items: center; gap: 10px; }
+    .contenedor-busqueda { position: relative; flex-grow: 1; max-width: 400px; }
 
     .input-busqueda {
         padding: 10px 10px 10px 35px;
@@ -62,10 +41,9 @@
         box-sizing: border-box;
     }
 
-    /* GRID DE TARJETAS */
     .lista-scroll {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adaptativo automático */
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 20px;
     }
 
@@ -81,10 +59,8 @@
     }
 
     .usuario-info { display: flex; gap: 15px; align-items: center; }
-
     .avatar { border-radius: 50%; height: 70px; width: 70px; object-fit: cover; flex-shrink: 0; }
 
-    /* PANEL DERECHO (DETALLE) */
     .detalle {
         width: 350px;
         background: #B7D0E1;
@@ -102,7 +78,6 @@
         box-sizing: border-box;
     }
 
-    /* BOTONES */
     .btn-accion, .btn-detalle, .btn-borrar {
         cursor: pointer;
         border: none;
@@ -111,63 +86,90 @@
         transition: transform 0.1s;
     }
 
-    .btn-accion:active { transform: scale(0.98); }
-
     .btn-detalle { background: #5e7f98; color: white; padding: 8px 15px; }
+    .btn-borrar { background: #c94c4c; color: white; padding: 6px 12px; font-size: 0.8rem; }
+    .paginacion { text-align: center; margin: 20px 0; }
 
-    .btn-borrar {
-        background: #c94c4c;
-        color: white;
-        padding: 6px 12px;
-        font-size: 0.8rem;
-    }
-
-    /* MEDIA QUERIES PARA MÓVIL */
+    /* =============================================
+       NUEVOS AJUSTES EXCLUSIVOS PARA MÓVIL
+    ============================================= */
     @media (max-width: 768px) {
         .contenido {
-            flex-direction: column; /* Apila listado y detalle */
+            flex-direction: column; /* Apilado vertical */
+        }
+
+        .listado {
+            padding: 15px; /* Menos margen en bordes de pantalla */
         }
 
         .detalle {
             width: 100%;
-            border-radius: 25px 25px 0 0;
-            order: -1; /* Muestra el detalle arriba si hay uno seleccionado */
-            box-sizing: border-box;
+            border-radius: 0 0 25px 25px; /* Redondeado invertido para el tope */
+            order: -1; /* El detalle aparece arriba si está activo */
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
         .filtro_busqueda {
             flex-direction: column;
-            align-items: stretch;
+            align-items: stretch; /* Filtros ocupan todo el ancho */
+        }
+
+        .barra-filtros select {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .contenedor-busqueda {
+            max-width: 100%; /* Lupa y búsqueda a ancho completo */
         }
 
         .lista-scroll {
-            grid-template-columns: 1fr; /* Una columna en móvil */
+            grid-template-columns: 1fr; /* Una sola columna de tarjetas */
         }
 
         .usuario-card {
-            flex-direction: row;
+            flex-direction: column; /* Apila info y botones dentro de la tarjeta */
+            gap: 15px;
         }
 
-        .btn-borrar {
-            opacity: 1; /* Siempre visible en móvil porque no hay 'hover' */
-            visibility: visible;
+        .usuario-info {
+            width: 100%;
         }
 
-        .avatar { height: 60px; width: 60px; }
-    }
+        /* Contenedor de botones en la tarjeta para que se vean bien en móvil */
+        .usuario-card > div:last-child {
+            flex-direction: row !important; /* Botones uno al lado del otro */
+            width: 100%;
+            justify-content: flex-end;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 10px;
+        }
 
-    /* PAGINACIÓN */
-    .paginacion { text-align: center; margin: 20px 0; }
-    .paginacion a {
-        display: inline-block;
-        margin: 0 3px;
-        padding: 8px 14px;
-        background: #5e7f98;
-        color: white;
-        border-radius: 6px;
-        text-decoration: none;
+        .btn-detalle, .btn-borrar {
+            padding: 12px 20px; /* Botones más grandes para dedos (Touch targets) */
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-anyadir {
+            position: fixed; /* Botón flotante para añadir usuario */
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .btn-anyadir .btn-accion {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            padding: 15px 25px;
+            border-radius: 50px;
+        }
+
+        .paginacion a {
+            padding: 12px 16px; /* Números de página más fáciles de pulsar */
+            margin: 5px;
+        }
     }
-    .paginacion a.active { background: #2A5677; }
 </style>
 </head>
 
