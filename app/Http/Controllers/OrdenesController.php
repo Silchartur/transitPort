@@ -120,9 +120,12 @@ class OrdenesController extends Controller
                 'tipo', 'estado', 'prioridad', 'buque_id', 'parking_id', 'contenedor_id', 'administrativo_id', 'observaciones'
             ]));
 
-            $orden->operario_sts()->sync($request->operario_sts_id);
-            $orden->operario_sc()->sync($request->operario_sc_id);
-
+            $orden->operario_sts()->sync([
+                $request->operario_sts_id => ['tipo' => 'sts']
+            ]);
+            $orden->operario_sc()->sync([
+                $request->operario_sc_id => ['tipo' => 'sc']
+            ]);
 
             $orden->gruas()->sync([
                 $request->grua_sts_id,
