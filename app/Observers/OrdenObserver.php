@@ -48,6 +48,19 @@ class OrdenObserver
                 }
                 break;
 
+            case 'en_proceso_sts':
+
+                if ($orden->tipo === "descarga") {
+                    $contenedor->update([
+                        'ubicacion' => 'Descargando del buque',
+                        'parking_id' => null
+                    ]);
+                } else {
+                    $contenedor->update([
+                        'ubicacion' => 'Cargando al buque',
+                        'parking_id' => null
+                    ]);
+                }
 
             case 'en_zona_desc':
 
@@ -57,6 +70,20 @@ class OrdenObserver
                 ]);
 
                 break;
+
+            case 'en_proceso_sc':
+
+                if ($orden->tipo === "descarga") {
+                    $contenedor->update([
+                        'ubicacion' => 'De camino al patio',
+                        'parking_id' => null
+                    ]);
+                } else {
+                    $contenedor->update([
+                        'ubicacion' => 'De camino a zona descarga',
+                        'parking_id' => null
+                    ]);
+                }
 
             case 'completada':
 
@@ -98,8 +125,6 @@ class OrdenObserver
 
                 if ($grua->tipo === 'sts') {
                     $grua->estado = 'ocupada';
-                } elseif ($grua->tipo === "sc") {
-                    $grua->estado = "disponible";
                 }
             }
 
@@ -107,13 +132,9 @@ class OrdenObserver
                 if ($orden->tipo === "descarga") {
                     if ($grua->tipo === "sts") {
                         $grua->estado = "disponible";
-                    } else {
-                        $grua->estado = "ocupada";
                     }
                 } elseif ($orden->tipo === "carga") {
-                    if ($grua->tipo === "sts") {
-                        $grua->estado = "ocupada";
-                    } else {
+                    if ($grua->tipo === "sc") {
                         $grua->estado = "disponible";
                     }
                 }
@@ -121,10 +142,8 @@ class OrdenObserver
 
             if ($orden->estado === 'en_proceso_sc') {
 
-                if ($grua->tipo === 'sts') {
-                    $grua->estado = 'disponible';
-                } elseif ($grua->tipo === "sc") {
-                    $grua->estado = "ocupada";
+                if ($grua->tipo === 'sc') {
+                    $grua->estado = 'ocupada';
                 }
             }
 

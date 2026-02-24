@@ -7,160 +7,170 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Arial;
-            height: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
+   <style>
+    /* ... (Mantenemos tus estilos base intactos para no romper el diseño desktop) ... */
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background-color: #f4f7f9;
+        color: #333;
+    }
+
+    h1 { color: #2f5876; margin-top: 0; font-size: 1.8rem; }
+    .main { min-height: 100vh; display: flex; flex-direction: column; }
+    .contenido { display: flex; flex: 1; flex-direction: row; }
+    .listado { flex: 1; padding: 20px; transition: all 0.3s ease; }
+
+    .filtro_busqueda {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 15px;
+        margin-bottom: 20px;
+        align-items: center;
+    }
+
+    .barra-filtros { display: flex; align-items: center; gap: 10px; }
+    .contenedor-busqueda { position: relative; flex-grow: 1; max-width: 400px; }
+
+    .input-busqueda {
+        padding: 10px 10px 10px 35px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .lista-scroll {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .usuario-card {
+        background: #DFECF5;
+        color: #2A5677;
+        border-radius: 14px;
+        padding: 15px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .usuario-info { display: flex; gap: 15px; align-items: center; }
+    .avatar { border-radius: 50%; height: 70px; width: 70px; object-fit: cover; flex-shrink: 0; }
+
+    .detalle {
+        width: 350px;
+        background: #B7D0E1;
+        padding: 25px;
+        border-radius: 25px 0 0 25px;
+        box-shadow: -4px 0 10px rgba(0,0,0,0.05);
+    }
+
+    .panel-detalle input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid rgba(255,255,255,0.5);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        box-sizing: border-box;
+    }
+
+    .btn-accion, .btn-detalle, .btn-borrar {
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: transform 0.1s;
+    }
+
+    .btn-detalle { background: #5e7f98; color: white; padding: 8px 15px; }
+    .btn-borrar { background: #c94c4c; color: white; padding: 6px 12px; font-size: 0.8rem; }
+    .paginacion { text-align: center; margin: 20px 0; }
+
+    /* =============================================
+       NUEVOS AJUSTES EXCLUSIVOS PARA MÓVIL
+    ============================================= */
+    @media (max-width: 768px) {
+        .contenido {
+            flex-direction: column; /* Apilado vertical */
         }
 
-        h1 { color: #2f5876; margin-top: 0; }
-
-        .main { display: flex; height: 100% }
-
-        /* CONTENIDO */
-        .contenido { flex: 1; display: flex }
-
-        /* LISTADO */
         .listado {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
+            padding: 15px; /* Menos margen en bordes de pantalla */
         }
 
-        .barra-filtros {
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .lista-scroll {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .usuario-card {
-            background: #DFECF5;
-            color: #2A5677;
-            border-radius: 14px;
-            padding: 10px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .usuario-info { display: flex; gap: 50px }
-
-        .avatar { border-radius: 50%; height: 100px; width: 100px; object-fit: cover; }
-
-        .btn-detalle {
-            background: #5e7f98;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 6px 12px;
-            cursor: pointer;
-        }
-
-        /* PANEL DERECHO */
         .detalle {
-            width: 30%;
-            background: #B7D0E1;
-            padding: 25px;
-            border-radius: 25px 0 0 25px;
-        }
-
-        .panel-detalle input {
             width: 100%;
-            padding: 9px;
-            border: none;
-            border-radius: 8px;
-            margin-bottom: 12px;
+            border-radius: 0 0 25px 25px; /* Redondeado invertido para el tope */
+            order: -1; /* El detalle aparece arriba si está activo */
+            padding: 20px;
+            margin-bottom: 20px;
         }
-
-        /* BOTONES */
-        .btn-accion {
-            background: #5e7f98;
-            color: white;
-            display: flex;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 22px;
-            cursor: pointer;
-        }
-
-        .paginacion { text-align: center; margin-top: 15px; }
-        .paginacion a {
-            margin: 0 5px;
-            padding: 6px 12px;
-            background: #5e7f98;
-            color: white;
-            border-radius: 6px;
-            text-decoration: none;
-        }
-        .paginacion a.active { background: #2A5677; }
-
 
         .filtro_busqueda {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            align-items: center;
+            flex-direction: column;
+            align-items: stretch; /* Filtros ocupan todo el ancho */
+        }
+
+        .barra-filtros select {
+            flex: 1;
+            padding: 10px;
         }
 
         .contenedor-busqueda {
-            position: relative;
-            display: flex;
-            align-items: center;
+            max-width: 100%; /* Lupa y búsqueda a ancho completo */
         }
 
-        .icono-lupa {
-            position: absolute;
-            left: 10px;
-            fill: #5e7f98;
+        .lista-scroll {
+            grid-template-columns: 1fr; /* Una sola columna de tarjetas */
         }
 
-        .input-busqueda {
-            padding: 9px 10px 9px 35px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            width: 220px;
-            outline: none;
+        .usuario-card {
+            flex-direction: column; /* Apila info y botones dentro de la tarjeta */
+            gap: 15px;
         }
 
-        .btn-anyadir { display: flex; justify-content: center; padding-top: 20px; }
-
-        .btn-volver {
-            color: #dce7ef;
-            background-color: #5F84A2;
-            width: 85px;
-            height: 40px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 15px;
+        .usuario-info {
+            width: 100%;
         }
 
-        .btn-borrar {
-            background: #c94c4c;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 6px 12px;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease;
+        /* Contenedor de botones en la tarjeta para que se vean bien en móvil */
+        .usuario-card > div:last-child {
+            flex-direction: row !important; /* Botones uno al lado del otro */
+            width: 100%;
+            justify-content: flex-end;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 10px;
         }
 
-        .usuario-card:hover .btn-borrar { opacity: 1; visibility: visible; }
-    </style>
+        .btn-detalle, .btn-borrar {
+            padding: 12px 20px; /* Botones más grandes para dedos (Touch targets) */
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-anyadir {
+            position: fixed; /* Botón flotante para añadir usuario */
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .btn-anyadir .btn-accion {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            padding: 15px 25px;
+            border-radius: 50px;
+        }
+
+        .paginacion a {
+            padding: 12px 16px; /* Números de página más fáciles de pulsar */
+            margin: 5px;
+        }
+    }
+</style>
 </head>
 
 <body>

@@ -120,10 +120,14 @@ class ContenedoresController extends Controller
 
         if ($orden->tipo === 'descarga') {
             switch ($orden->estado) {
-                case 'en_zona_desc':
-                    return 'Zona de descarga';
                 case 'pendiente':
                     return 'Buque';
+                case 'en_proceso_sts':
+                    return 'Descargando del buque';
+                case 'en_zona_desc':
+                    return 'Zona de descarga';
+                case 'en_proceso_sc':
+                    return 'De camino al patio';
                 case 'completada':
                     return 'Parking';
             }
@@ -132,10 +136,14 @@ class ContenedoresController extends Controller
 
         if ($orden->tipo === 'carga') {
             switch ($orden->estado) {
-                case 'en_zona_desc':
-                    return 'Patio';
                 case 'pendiente':
                     return 'Parking';
+                case 'en_proceso_sc':
+                    return 'De camino a zona descarga';
+                case 'en_zona_desc':
+                    return 'Zona de descarga';
+                case 'en_proceso_sts':
+                    return 'Cargando al buque';
                 case 'completada':
                     return 'Buque';
             }
