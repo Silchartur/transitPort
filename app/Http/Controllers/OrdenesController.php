@@ -97,7 +97,7 @@ class OrdenesController extends Controller
 
     }
 
-    public function modificarOrden(Request $request) {
+    public function modificarOrden(Request $request, $id) {
 
         $validatedData = $request->validate([
             'tipo' => 'required|in:carga,descarga',
@@ -115,7 +115,7 @@ class OrdenesController extends Controller
         ]);
 
         try {
-            $orden = Orden::findOrFail($request['id']);
+            $orden = Orden::findOrFail($id);
             $orden->update($request->only([
                 'tipo', 'estado', 'prioridad', 'buque_id', 'parking_id', 'contenedor_id', 'administrativo_id', 'observaciones'
             ]));
@@ -124,7 +124,7 @@ class OrdenesController extends Controller
             $orden->operarioSC()->attach($request->operario_sc_id);
 
 
-            $orden->gruas()->attach([
+            $orden->gruas()->sync([
                 $request->grua_sts_id,
                 $request->grua_sc_id
             ]);
@@ -235,6 +235,6 @@ class OrdenesController extends Controller
         $orden->delete();
 
            return response()->json(['message' => 'Eliminado']);
-    
+
     }
 }
