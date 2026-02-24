@@ -120,14 +120,16 @@ class OrdenesController extends Controller
                 'tipo', 'estado', 'prioridad', 'buque_id', 'parking_id', 'contenedor_id', 'administrativo_id', 'observaciones'
             ]));
 
-            $orden->operarioSTS()->attach($request->operario_sts_id);
-            $orden->operarioSC()->attach($request->operario_sc_id);
+            $orden->operario_sts()->sync($request->operario_sts_id);
+            $orden->operario_sc()->sync($request->operario_sc_id);
 
 
             $orden->gruas()->sync([
                 $request->grua_sts_id,
                 $request->grua_sc_id
             ]);
+
+            $orden->load(['operario_sts', 'operario_sc', 'gruas']);
 
             return response()->json([
                 'message' => 'Orden actualizada con éxito.',
